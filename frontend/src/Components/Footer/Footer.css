@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.footer {
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 40px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content:center;
+  align-items: center; 
+  flex-direction: row;
+
+}
+
+.footer-about, .footer-contact, .footer-social {
+  flex: 1; 
+  margin: 0 2rem;
+}
+
+.phone, .mail {
+  margin: 15px 0;
+}
+
+.phone a:hover, .mail a:hover, .footer-about li:hover, .social-icons a:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-about h3,
+.footer-contact h3,
+.footer-social h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  margin-top: 1rem; 
+  font-weight: 500;
+  text-align: center;
+}
+
+.footer-about li,
+.footer-contact p,
+.footer-social p {
+  font-weight: 200;
+}
+
+.footer-about ul {
+  list-style: none;
+  padding: 0; 
+}
+
+.phone a, .mail a {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75vw;
+  font-weight: 300;
+}
+
+.footer-about ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.footer-contact p {
+  margin-bottom: 5px;
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.social-icons {
+  font-size: 1.5rem;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+      flex-direction: column;
+      padding: 0 2rem;
+  }
+
+  .footer-about,
+  .footer-contact,
+  .footer-social {
+      margin-bottom: 20px;
+      text-align: center;
+  }
+.contact{
+  text-align: center;
+}
+
+  .footer-contact h3,
+  .footer-about h3,
+  .footer-social h3 {
+      font-size: 1rem;
+      text-align: center;
+  }
+
+  .footer-about ul li {
+      font-size: 0.85rem;
+  }
+
+  .phone a,
+  .mail a {
+      font-size: 0.9rem;
+      justify-content: center;
+  }
+
+  .social-icons {
+      justify-content: center;
+      gap: 1rem;
+  }
+
+  .social-icons i {
+      font-size: 1.2rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .footer {
+      padding: 20px;
+  }
+
+  .footer-contact h3 {
+      width: 100%;
+      padding: 10px;
+  }
+
+  .footer-content {
+      padding: 0 1rem;
+  }
+
+  .footer-about h3,
+  .footer-contact h3,
+  .footer-social h3 {
+      font-size: 0.9rem;
+  }
+
+  .footer-about ul li {
+      font-size: 0.8rem;
+  }
+
+  .phone a,
+  .mail a {
+      font-size: 0.85rem;
+      flex-direction: column;
+      gap: 0.2rem;
+  }
+
+  .social-icons i {
+      font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-content {
+      padding: 0 5rem;
+  }
+
+  .footer-about ul li {
+      font-size: 0.95rem;
+  }
+
+  .footer-about h3,
+  .footer-contact h3,
+  .footer-social h3 {
+      font-size: 1.1rem;
+  }
+
+  .social-icons {
+      gap: 1.5rem;
+  }
+
+  .social-icons i {
+      font-size: 1.3rem;
+  }
+}

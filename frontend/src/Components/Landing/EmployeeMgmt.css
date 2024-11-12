@@ -1,0 +1,146 @@
+/* Reset some default styling */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  .ems{
+    text-align: left;
+    font-weight: 800;
+    font-size: larger;
+    font-family: "Poppins", sans-serif;
+  }
+  .ems-sub,hr{
+    text-align: left;
+    width: 27rem;
+  }
+  .employee-management {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+.ems-desc{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+  .main-content {
+    padding: 0 4vw 0 4vw;
+    margin: 10vw;
+    margin-top: 3vw;
+  }
+  
+  .main-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #000;
+  }
+  
+  .main-content p {
+    margin-bottom: 30px;
+    margin-top: 20px;
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: left;
+    gap: 2.5rem;
+  }
+  
+  .login-btn,
+  .signup-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .login-btn {
+    background-color: #1E1E2C;
+    color: #fff;
+  }
+  
+  .signup-btn {
+    background-color: #3B8FF3;
+    color: #000000;
+  }
+  
+  @media (max-width: 1200px) {
+    .main-content {
+        margin: 5vw;
+    }
+
+    .main-content h1 {
+        font-size: 3rem;
+    }
+
+    .main-content p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .ems-desc {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-content {
+        margin: 4vw;
+        padding: 0 3vw;
+    }
+
+    .main-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .action-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content h1 {
+        font-size: 2rem;
+    }
+
+    .main-content p {
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        margin: 2vw;
+        padding: 0 2vw;
+    }
+
+    .main-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .main-content p {
+        font-size: 0.8rem;
+    }
+
+}
+  

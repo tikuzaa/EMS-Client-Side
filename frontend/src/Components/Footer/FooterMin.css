@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+.footer {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 0.5rem; 
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
+
+.footer-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
+
+.phone, .mail {
+    margin: 0; 
+}
+
+.phone a, .mail a {
+    display: flex;
+    align-items: center; 
+    gap: 0.5rem;
+    font-weight: 300;
+    justify-content: center;
+}
+
+.phone a svg, .mail a svg {
+    width: 16px; 
+    height: 16px; 
+}
+
+.phone a:hover, .mail a:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    font-weight: 300;
+}
+
+/* Media Queries*/
+@media (max-width: 768px) {
+    .footer-contact {
+        margin-bottom: 20px;
+    }
+    .phone a, .mail a {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 20px;
+    }
+    .phone a, .mail a {
+        justify-content: center;
+    }
+}

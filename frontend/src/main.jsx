@@ -12,9 +12,12 @@ import AdminDashboard from './Components/Dashboard/AdminDashboard.jsx';
 import AdminProjects from './Components/Projects/AdminProjects.jsx';
 import MemberProjects from './Components/Projects/MemberProjects.jsx';
 import AdminEvents from './Components/Events/AdminEvents.jsx';
+import MemberEvents from './Components/Events/MemberEvents.jsx';
+import Myprofile from './Components/My profile/Myprofile.jsx';
 import { membersData } from './Data/membersData.js';
 import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';
+
 
 const Main = () => {
   // Set initial role; modify 'member' or 'admin' as required
@@ -61,10 +64,17 @@ const Main = () => {
 
         {/* Member Projects */}
         {role === 'member' && (
+          <>
           <Route
             path="/member/projects"
             element={<MemberProjects projectsData={projectsData} memberId={101} />} // pass the logged-in memberId
           />
+          <Route
+              path="/member/events"
+              element={<MemberEvents eventsData={eventsData} membersData={membersData} />}
+            />
+            <Route path="/member/myprofile/:id" element={<Myprofile members={membersData} role={role} />} />
+            </>
         )}
 
         {/* Error Page for Unmatched Routes */}

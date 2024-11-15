@@ -66,7 +66,7 @@ const ProjectComponent = ({ projectsData, membersData }) => {
   };
 
   return (
-    <div className="p-6 space-y-6 font-poppins">
+    <div className="p-6 space-y-6 font-poppins min-h-screen">
       {/* Ongoing Projects Section */}
       <section 
       style={{ backgroundColor: 'rgba(242, 159, 103, 0.5)' }}

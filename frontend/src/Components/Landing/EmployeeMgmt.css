@@ -8,6 +8,7 @@
   
   body {
     font-family: 'Arial', sans-serif;
+    overflow-x: hidden; 
   }
   .ems{
     text-align: left;
@@ -24,7 +25,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100vh;
+    min-height: 63vh;
   }
 .ems-desc{
   display: flex;
@@ -32,12 +33,13 @@
   justify-content: space-between;
 }
 
-
-  .main-content {
-    padding: 0 4vw 0 4vw;
-    margin: 10vw;
-    margin-top: 3vw;
-  }
+.main-content {
+  padding: 0 4vw; 
+  margin: 10vw; 
+  margin-top: 3vw;
+  max-width: 100%;
+  overflow-x: hidden;
+}
   
   .main-content h1 {
     font-size: 3.5rem;
@@ -58,7 +60,32 @@
     justify-content: left;
     gap: 2.5rem;
   }
+    
+  .login-btn span, .signup-btn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.25s;
+  }
   
+  .login-btn span:after, .signup-btn span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.25s;
+  }
+  
+  .login-btn:hover span, .signup-btn:hover span {
+    padding-right: 25px;
+  }
+  
+  .login-btn:hover span:after, .signup-btn:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
   .login-btn,
   .signup-btn {
     padding: 10px 20px;
@@ -128,19 +155,128 @@
     }
 }
 
+
 @media (max-width: 576px) {
-    .main-content {
-        margin: 2vw;
-        padding: 0 2vw;
-    }
+  .main-content {
+      margin: 2vw;
+      padding: 0 2vw;
+  }
 
-    .main-content h1 {
-        font-size: 1.8rem;
-    }
+  .main-content h1 {
+      font-size: 1.8rem;
+  }
 
-    .main-content p {
-        font-size: 0.8rem;
-    }
+  .main-content p {
+      font-size: 0.8rem;
+  }
 
 }
-  
+
+
+/* Media Query for iPhone SE */
+@media only screen and (max-width: 376px) {
+  .main-content {
+      margin: 0;
+      padding: 0 2vw;
+  }
+
+  .main-content h1 {
+    font-size: 2.5rem;
+    display: flex;
+text-align: center;
+justify-content: center;
+padding: 2vw;
+}
+  .main-content p {
+      font-size: 0.7rem;
+      text-align: center;
+      line-height: 1.4; 
+      margin-bottom: 3px;
+  }
+
+  .ems-sub{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 5vw;
+    text-align: center;
+  }
+
+  .action-buttons {
+      flex-direction: column;
+      gap: 0.8rem;
+      align-items: center;
+  }
+}
+/* Media Query for iPhone 14 Pro Max */
+@media only screen and (max-width: 431px) and (min-width: 391px) {
+  .main-content {
+      margin: 3vw;
+      padding: 0 3vw;
+  }
+
+  .main-content h1 {
+      font-size: 3rem;
+      display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 2vw;
+  }
+.ems-sub{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 5vw;
+}
+  .main-content p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+  }
+
+  .action-buttons {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+  }
+}
+
+/* Media Query for iPhone XR */
+@media only screen and (max-width: 415px) {
+  .main-content {
+      margin: 3vw; /* Adjust margin for smaller screens */
+      padding: 0 2vw; /* Adjust padding for smaller screens */
+  }
+  .employee-management{
+    min-height: 83vh;
+  }
+.ems-sub{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  .main-content h1 {
+      font-size: 2.5rem; /* Adjust font size for better fit */
+  }
+
+  .main-content p {
+      font-size: 0.7rem; /* Adjust font size for better fit */
+      line-height: 1.4; /* Maintain line height */
+      margin-bottom: 3px; /* Ensure proper spacing */
+  }
+
+  .action-buttons {
+      flex-direction: column;
+      gap: 1rem; /* Adjust gap as needed */
+      align-items: center;
+  }
+}
+
+@media only screen and (max-width: 1025px){
+  .employee-management{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 83vh;
+  }
+}

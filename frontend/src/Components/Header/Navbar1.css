@@ -1,60 +1,110 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Basic Styles */
+body {
+  padding-top: 80px;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+/* Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-between;
-  /* margin: 1rem; */
+  align-items: center;
   padding: 1rem;
   position: fixed;
-  top: 0; 
-  left: 0; 
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: white; 
-  z-index: 1000; 
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  }
-  
-  .navbar-logo h1 {
-    font-size: 1.5rem;
-    color: #323757;
-    margin-left: 0.5rem;
-    font-family:"Poppins", sans-serif;
-  }
-  .navbar-logo span{
-    color: #3B8FF3;
-  }
-  .navbar-logo{
-    display: flex;
+/* Logo Section */
+.navbar-logo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.navbar-logo h1 {
+  font-size: 1.2rem;
+  color: #323757;
+  margin: 0;
+}
+
+.navbar-logo span {
+  color: #3B8FF3;
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: #c10f0f;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #a00d0d;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  .navbar {
     flex-direction: row;
-    gap: 0.5rem;
-    justify-content: center;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-logo h1 {
+    font-size: 1rem;
+  }
+
+  .logout-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
     align-items: center;
   }
-  .about-btn {
-    background-color: #323757;
-    color: #fff;
-    border: none;
-    border-radius: 98px;
-    cursor: pointer;
-    padding: 5px 25px;
-    font-family: "Poppins", sans-serif;
-    margin-right: 2vw;
+
+  .navbar-logo {
+    flex-direction: row;
+    margin-left: 0;
+    gap: 0.2rem;
   }
+
+  .logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 0.9rem;
+  }
+
   .logout-btn {
-    background-color: #c10f0f;
-    color: #fff;
-    border: none;
-    border-radius: 98px;
-    cursor: pointer;
-    padding: 5px 25px;
-    font-family: "Poppins", sans-serif;
-    margin-right: 2vw;
+    margin: 0.5rem 0;
+    padding: 5px 20px;
+    width: 100px;
+    font-size: 0.8rem;
   }
-  
-  .logo{
-    width:50px;
-    height: 50px;
-    margin-left: 3rem;
-  }
-  body {
-    padding-top: 80px; 
 }

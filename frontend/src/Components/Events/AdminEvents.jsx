@@ -54,7 +54,7 @@ const EventComponent = ({eventsData, membersData}) => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 min-h-screen">
       {/* Upcoming Events Section */}
       <section className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>

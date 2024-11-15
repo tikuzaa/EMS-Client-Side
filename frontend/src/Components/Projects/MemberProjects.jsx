@@ -2,7 +2,7 @@ import React from 'react';
 
 const MemberProjectComponent = ({ projectsData, memberId }) => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 min-h-screen">
       {/* Ongoing Projects Section */}
       <section
         style={{ backgroundColor: 'rgba(242, 159, 103, 0.4)' }}

@@ -23,10 +23,10 @@ const EmployeeMgmt = ({setRole}) => {
         <div className="action-buttons">
           {/* Use Link component to route to ChooseRolePage */}
           <Link to="/member/login">
-            <button onClick={() => setRole('member')} className="login-btn">LOGIN &gt; </button>
+            <button onClick={() => setRole('member')} className="login-btn"><span>LOGIN</span></button>
           </Link>
           <Link to="/member/signup">
-          <button onClick={() => setRole('member')} className="signup-btn">SIGN UP &gt; </button>
+          <button onClick={() => setRole('member')} className="signup-btn"><span>SIGN UP</span></button>
           </Link>
         </div>
       </div>

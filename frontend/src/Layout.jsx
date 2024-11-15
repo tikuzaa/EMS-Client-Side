@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Navbar1 from './Components/Header/Navbar1'; // Adjust the path as necessary
+import Navbar1 from './Components/Header/Navbar1'; 
 import { Outlet } from 'react-router-dom';
-import Footer from './Components/Footer/Footer'; // Adjust the path as necessary
+import Footer from './Components/Footer/Footer'; 
+import FooterMin from './Components/Footer/FooterMin';
 import Sidebar from './Components/SideBar/SideBar';
 
 function Layout({role}) {
@@ -26,9 +27,9 @@ function Layout({role}) {
       (<Outlet context={{ handleLoginToggle }} />)
     }
 
-    <Footer />
+{isLoggedIn ? <FooterMin /> : <Footer />}
     </>
-  )
+  );
 }
 
 export default Layout

@@ -5,7 +5,7 @@ import { FaPhone, FaEnvelope } from 'react-icons/fa';
 const Footermin = () => {
   return (
     <footer className="footer">
-      <div className="footer-content">
+      <div className="footermin-content">
         <div className="footer-contact">
           <div className='contact'>
             <div className='phone'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar1 from './Components/Header/Navbar1'; 
 import { Outlet } from 'react-router-dom';
 import Footer from './Components/Footer/Footer'; 
@@ -8,6 +8,12 @@ import Sidebar from './Components/SideBar/SideBar';
 function Layout({role}) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() =>{
+      if(localStorage.getItem("userData")){
+        handleLoginToggle()
+  
+      }
+    },[])
   
     const handleLoginToggle = () => {
       setIsLoggedIn(!isLoggedIn);

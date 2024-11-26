@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link,useNavigate, useLocation, useOutletContext} from 'react-router-dom'
 import background from '../../assets/Images/background.jpg';
 
@@ -10,9 +10,16 @@ const Login = ({setRole, role}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  useEffect(()=>{
+    if(localStorage.getItem("userData")){
+      navigate(`/${role}/home`, { state: { userData:JSON.parse(localStorage.getItem('userData')) } });
 
+    }
+  },[])
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+      
     try {
         const response = await fetch('http://localhost:8080/auth/login', {
             method: 'POST',
@@ -23,9 +30,11 @@ const Login = ({setRole, role}) => {
         });
 
         const data = await response.json();
-
+        console.log(data)
         if (data.success) {
             // Handle successful login
+            handleLoginToggle();
+            localStorage.setItem('userData', JSON.stringify(data));
             navigate(`/${role}/home`, { state: { userData: data } });
         } else {
             // Handle login failure
@@ -64,7 +73,7 @@ const Login = ({setRole, role}) => {
             ADMIN
           </Link>
         </div>
-        <form onSubmit={handleLogin}>
+        <div >
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Email</label>
             <input
@@ -88,13 +97,13 @@ const Login = ({setRole, role}) => {
           <Link to={`/${role}/home`} >
           <button
             type="submit"
-            onClick={handleLoginToggle}
+            onClick={handleLogin}
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
           >
             Login
           </button>
           </Link>
-        </form>
+        </div>
         <div className="mt-4 text-center">
           {
             role === 'admin' ? (

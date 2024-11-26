@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import {Link,useNavigate, useLocation, useOutletContext} from 'react-router-dom'
 import background from '../../assets/Images/background.jpg';
 
-
 const Login = ({setRole, role}) => {
-  
   const { handleLoginToggle } = useOutletContext();
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,15 +11,31 @@ const Login = ({setRole, role}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Logic for login based on role
-    if (role === 'admin') {
-      console.log('Logging in as admin');
-    } else {
-      console.log('Logging in as member');
+    try {
+        const response = await fetch('http://localhost:8080/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Handle successful login
+            navigate(`/${role}/home`, { state: { userData: data } });
+        } else {
+            // Handle login failure
+            console.error('Login failed:', data.message);
+            alert(data.message); // Show an alert or set an error state
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-  };
+};
 
   const isMemberLogin = location.pathname === '/member/login';
 

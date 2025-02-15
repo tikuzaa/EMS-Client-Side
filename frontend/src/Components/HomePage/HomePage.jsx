@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import MemberCard from '../MemberCard/Member Card.jsx'; // Adjust the path if necessary
+import MemberCard from '../MemberCard/Member Card.jsx'; 
 
 const HomePage = ({ members, role }) => {
   const location = useLocation();
-  const { userData } = location.state || {};
-
+  const userData = location.state?.userData || {};
   const [selectedDomain, setSelectedDomain] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 

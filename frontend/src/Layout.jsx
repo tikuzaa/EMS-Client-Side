@@ -4,10 +4,13 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Components/Footer/Footer'; 
 import FooterMin from './Components/Footer/FooterMin';
 import Sidebar from './Components/SideBar/SideBar';
+import { X } from "lucide-react";
 
 function Layout({role}) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
     useEffect(() =>{
       if(localStorage.getItem("userData")){
         handleLoginToggle()
@@ -20,13 +23,30 @@ function Layout({role}) {
       console.log('Login state toggled:', isLoggedIn,role);
     };
 
+    const handleSidebarToggle = () => { 
+      setSidebarOpen((prev) => !prev);
+     };
+
+     const handleClickOutside = (event) => {
+      if (sidebarOpen && !event.target.closest(".sidebar-container")) {
+        setSidebarOpen(false);
+      }
+    };
+
   return (
     <>
-    <Navbar1 role={role} isLoggedIn={isLoggedIn} handleLoginToggle={handleLoginToggle} />
+
+
+
+    <Navbar1 role={role} isLoggedIn={isLoggedIn} handleLoginToggle={handleLoginToggle} handleSidebarToggle={handleSidebarToggle}/>
     {isLoggedIn?
       (<div className={`flex flex-col lg:flex-row`}>
-        <Sidebar role={role} className="lg:w-64 w-full lg:h-auto h-screen lg:fixed lg:top-0 lg:left-0 fixed top-0 left-0 lg:block hidden" />
-        <div className="flex-1 lg:ml-2 mt-16 lg:mt-0">
+        <div className={`lg:h-screen lg:w-64 w-full bg-gray-200 
+        transition-transform duration-300 ease-in-out 
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 `}
+        ><Sidebar role={role} className="lg:h-screen z-1" /></div>
+
+        <div className="flex-1 lg:ml-12 mt-16 lg:mt-0">
           <Outlet context={{ handleLoginToggle }} />
         </div>
       </div>):
@@ -39,3 +59,4 @@ function Layout({role}) {
 }
 
 export default Layout
+

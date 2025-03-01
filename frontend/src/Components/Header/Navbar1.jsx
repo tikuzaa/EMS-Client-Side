@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Navbar1.css';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ role, isLoggedIn, handleLoginToggle }) => {
+const Navbar = ({ role, isLoggedIn, handleLoginToggle, handleSidebarToggle }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // const toggleSidebar = () => {
@@ -23,8 +23,15 @@ const Navbar = ({ role, isLoggedIn, handleLoginToggle }) => {
             <Link to='/about'>
              
             </Link>
+
+            <div className='responsive-sidebar'>
+            <button className='lg:hidden block p-2 text-white bg-gray-800 rounded-md m-4' onClick={handleSidebarToggle}>
+              <h1>Menu</h1>
+            </button>
+        </div>
+
             <Link to='/'>
-              <button onClick={handleLoginToggle} className="logout-btn">LogOut</button>
+              <button onClick={handleLoginToggle} className="logout-btn hidden lg:block">LogOut</button>
             </Link>
           </>
         ) : (

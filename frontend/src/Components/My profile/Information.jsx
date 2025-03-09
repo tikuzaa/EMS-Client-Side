@@ -1,6 +1,6 @@
 function Information({ member }) {
     return (
-      <div className="bg-blue-100 rounded-lg p-4 space-y-4 shadow-md w-full flex-wrap">
+      <div className="bg-blue-100 px-2 w-full overflow-x-hidden rounded-lg py-4 space-y-4 shadow-md  flex-wrap ">
         <h3 className="text-lg font-semibold border-b border-neutral-800 pb-2">Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <p>

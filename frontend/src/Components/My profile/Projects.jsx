@@ -25,6 +25,7 @@ function displayProjectData(ID){
 
 function ProjectRow({ project}) {
     return (
+      
         <tr
             key={project.id}
             className="hover:bg-blue-300 transition-colors"
@@ -42,9 +43,10 @@ function Projects({ID}){
 
     return(
     <>
-        <div className="bg-blue-100 rounded-lg p-4 space-y-2 shadow-md">
-            <h3 className="font-semibold border-b border-neutral-800 pb-1">Projects/Assignments</h3>
-            <table className="w-full border-separate border-spacing-0 text-center">
+        <div className="bg-blue-100 rounded-lg space-y-2 shadow-md ">
+          <div className="w-full overflow-x-hidden ">
+          <h3 className="font-semibold border-b px-2 border-neutral-800 pb-1">Projects/Assignments</h3>
+            <table className="w-full border-separate border-spacing-0 text-center text-sm lg:text-base">
               <thead>
                 <tr className="bg-inherit">
                   <th className="p-2">Name</th>
@@ -62,6 +64,8 @@ function Projects({ID}){
               }
               </tbody>
             </table>
+          </div>
+            
         </div>
     </>
     );

@@ -5,13 +5,9 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ role, isLoggedIn, handleLoginToggle, handleSidebarToggle }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // const toggleSidebar = () => {
-  //   setIsSidebarOpen(!isSidebarOpen);
-  // };
-
   return (
-    <nav className="navbar">
-      
+    <nav className="navbar ">
+      <div className='grid grid-cols-2 gap-20 lg:flex lg:justify-between lg:items-center w-full'>
       <div className="navbar-logo">
         <img src="./src/assets/Images/logo.png" alt="logo" className='logo' />
         <h1>Emp<span>Space</span></h1>
@@ -19,7 +15,7 @@ const Navbar = ({ role, isLoggedIn, handleLoginToggle, handleSidebarToggle }) =>
       <div className='flex justify-center items-center ml-8'>
         
         {isLoggedIn ? (
-          <>
+          <div>
             <Link to='/about'>
              
             </Link>
@@ -33,12 +29,13 @@ const Navbar = ({ role, isLoggedIn, handleLoginToggle, handleSidebarToggle }) =>
             <Link to='/'>
               <button onClick={handleLoginToggle} className="logout-btn hidden lg:block">LogOut</button>
             </Link>
-          </>
+          </div>
         ) : (
           <Link to='/about'>
            
           </Link>
         )}
+      </div>
       </div>
     </nav>
   );

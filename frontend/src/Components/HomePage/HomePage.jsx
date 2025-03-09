@@ -19,16 +19,16 @@ const HomePage = ({ members, role }) => {
   // For debugging
   console.log('userData:', userData);
   return (
-    <div className="max-w-7xl mx-auto p-4">
+    <div className="max-w-7xl overflow-x-hidden  mx-auto p-4  relative z-0"> {/* Added relative z-0 to avoid overlap */}
       {userData.name ? (
-      <h1>Welcome {userData.name}</h1>
-    ) : (
-      <h1>Welcome Guest</h1>
-    )}
+        <h1>Welcome {userData.name}</h1>
+      ) : (
+        <h1>Welcome Guest</h1>
+      )}
 
       {/* Domain Tabs */}
       <div className="mb-4">
-        <ul className="flex space-x-4">
+        <ul className="flex space-x-4 justify-around px-5">
           {domains.map(domain => (
             <li key={domain}>
               <button
@@ -47,7 +47,7 @@ const HomePage = ({ members, role }) => {
       </div>
 
       {/* Search Bar */}
-      <div className="mb-4">
+      <div className="mb-4 px-5">
         <input
           type="text"
           className="w-full p-2 border rounded-md"
@@ -58,7 +58,7 @@ const HomePage = ({ members, role }) => {
       </div>
 
       {/* Member Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center lg:grid-cols-3 gap-6 py-5">
         {filteredMembers.map(member => (
           <MemberCard key={member.id} member={member} />
         ))}

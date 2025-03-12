@@ -10,6 +10,12 @@ const Navbar = ({
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const handleLogOut = () => {
+    localStorage.removeItem("userData");
+    handleLoginToggle();
+    console.log(isLoggedIn);
+  }
+
   return (
     <nav className="navbar ">
       <div className="grid grid-cols-2 gap-20 lg:flex lg:justify-between lg:items-center w-full">
@@ -36,14 +42,15 @@ const Navbar = ({
                 </div>
               )}
 
-              <Link to="/">
+              {isLoggedIn && <Link to="/">
                 <button
-                  onClick={handleLoginToggle}
+                  onClick={handleLogOut}
                   className="logout-btn hidden lg:block"
                 >
                   LogOut
                 </button>
-              </Link>
+                {console.log(isLoggedIn)}
+              </Link>}
             </div>
           ) : (
             <Link to="/about"></Link>

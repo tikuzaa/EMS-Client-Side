@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-const Sidebar = ({ role, handleLoginToggle }) => {
+const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
   return (
     <aside className="w-64 fixed  lg:h-screen z-50  bg-gray-200 rounded-lg text-gray-800 lg:relative overflow-y-auto font-poppins">
       <nav className="mt-8 ml-2">
@@ -75,7 +75,7 @@ const Sidebar = ({ role, handleLoginToggle }) => {
           </li>
           <li>
             <Link to='/'>
-              <button onClick={handleLoginToggle} className="logout-btn block lg:hidden">LogOut</button>
+              <button onClick={handleLogOut} className="logout-btn block lg:hidden">LogOut</button>
             </Link>
           </li>
         </ul>

@@ -7,14 +7,11 @@ const Navbar = ({
   isLoggedIn,
   handleLoginToggle,
   handleSidebarToggle,
+  handleLogOut,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const handleLogOut = () => {
-    localStorage.removeItem("userData");
-    handleLoginToggle();
-    console.log(isLoggedIn);
-  }
+  
 
   return (
     <nav className="navbar ">

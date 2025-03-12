@@ -5,7 +5,7 @@ import { FaLinkedin, FaTwitter, FaGithub, FaUserShield } from 'react-icons/fa'; 
     const { name, department, domain, year, socialMedia, expertIn, isAdmin, profileImage } = member;
     return (
       <div className="max-w-xs h-[450px] w-[330px] rounded-3xl overflow-hidden shadow-lg text-center font-sans">
-        <div className="bg-blue-500 h-[160px] flex items-center justify-center relative">
+        <div className="bg-blue-500 h-[160px] flex items-center justify-center ">
           {/* <div className="w-24 h-24 bg-black rounded-full absolute -bottom-5"></div> */}
           <img
           className="w-[159px] h-[159px] rounded-full object-cover mb-4 absolute -bottom-10"

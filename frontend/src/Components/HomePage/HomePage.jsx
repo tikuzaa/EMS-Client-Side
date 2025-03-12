@@ -23,7 +23,7 @@ const HomePage = ({ members, role }) => {
   // For debugging
   // console.log("userData:", userData);
   return (
-    <div className="max-w-7xl overflow-x-hidden  mx-auto p-4  relative z-0">
+    <div className="max-w-7xl overflow-x-hidden  mx-auto p-4  z-0">
       {" "}
       {/* Added relative z-0 to avoid overlap */}
       <div className="name px-4">

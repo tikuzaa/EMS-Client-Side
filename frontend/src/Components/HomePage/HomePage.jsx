@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
-import MemberCard from '../MemberCard/Member Card.jsx'; // Adjust the path if necessary
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import MemberCard from "../MemberCard/Member Card.jsx";
 
 const HomePage = ({ members, role }) => {
-  const [selectedDomain, setSelectedDomain] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
+  const userData = location.state?.userData || {};
+  const [selectedDomain, setSelectedDomain] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter members based on domain and search query
   const filteredMembers = members
-    .filter(member => selectedDomain === 'All' || member.domain === selectedDomain)
-    .filter(member => member.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter(
+      (member) => selectedDomain === "All" || member.domain === selectedDomain
+    )
+    .filter((member) =>
+      member.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   // Get unique domains for tabs
-  const domains = ['All', ...new Set(members.map(member => member.domain))];
+  const domains = ["All", ...new Set(members.map((member) => member.domain))];
 
+  // For debugging
+  // console.log("userData:", userData);
   return (
-    <div className="max-w-7xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Welcome {role === 'admin' ? 'Admin' : 'Member'} Home
-      </h1>
-
+    <div className="max-w-7xl overflow-x-hidden  mx-auto p-4  z-0">
+      {" "}
+      {/* Added relative z-0 to avoid overlap */}
+      <div className="name px-4">
+        {userData.name ? (
+          <h1>Welcome {userData.name}</h1>
+        ) : (
+          <h1>Welcome Guest</h1>
+        )}
+      </div>
       {/* Domain Tabs */}
       <div className="mb-4">
-        <ul className="flex space-x-4">
-          {domains.map(domain => (
+        <ul className="flex space-x-4 lg:justify-normal justify-around px-5">
+          {domains.map((domain) => (
             <li key={domain}>
               <button
                 className={`px-4 py-2 rounded-md ${
                   selectedDomain === domain
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700'
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700"
                 }`}
                 onClick={() => setSelectedDomain(domain)}
               >
@@ -38,9 +52,8 @@ const HomePage = ({ members, role }) => {
           ))}
         </ul>
       </div>
-
       {/* Search Bar */}
-      <div className="mb-4">
+      <div className="mb-4 px-5">
         <input
           type="text"
           className="w-full p-2 border rounded-md"
@@ -49,10 +62,9 @@ const HomePage = ({ members, role }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-
       {/* Member Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredMembers.map(member => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center lg:grid-cols-3 gap-6 py-5">
+        {filteredMembers.map((member) => (
           <MemberCard key={member.id} member={member} />
         ))}
       </div>

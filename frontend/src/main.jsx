@@ -18,6 +18,8 @@ import { membersData } from './Data/membersData.js';
 import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';
 
+const userData = localStorage.getItem("userData");
+localStorage.setItem("userData", userData)
 
 const Main = () => {
   // Set initial role; modify 'member' or 'admin' as required

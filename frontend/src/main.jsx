@@ -69,7 +69,7 @@ const Main = () => {
           <>
           <Route
             path="/member/projects"
-            element={<MemberProjects projectsData={projectsData} memberId={101} />} // pass the logged-in memberId
+            element={<MemberProjects projectsData={projectsData} memberId={101} />} // Problem here
           />
           <Route
               path="/member/events"

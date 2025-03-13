@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import API from "../Utils/axiosConfig"; 
 
 const EventComponent = ({eventsData, membersData}) => {
   const [events, setEvents] = useState(eventsData); // Using imported events data
@@ -9,6 +10,32 @@ const EventComponent = ({eventsData, membersData}) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    fetchEvents();
+    fetchMembers();
+  }, []);
+
+  // Fetch all events
+  const fetchEvents = async () => {
+    try {
+      const response = await API.get('/api/events');
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  // Fetch all members
+  const fetchMembers = async () => {
+    try {
+      const response = await API.get('/api/members');
+      setMembers(response.data);
+    } catch (error) {
+      console.error('Error fetching members:', error);
+    }
+  };
+
+  // Handle new event addition
   const handleAddEvent = () => {
     setIsModalOpen(true);
     setEventDetails({
@@ -29,24 +56,21 @@ const EventComponent = ({eventsData, membersData}) => {
     }));
   };
 
-  const handleSaveEvent = () => {
-    const newEvent = {
-      ...eventDetails,
-      id: events.length + 1,
-    };
-    setEvents([...events, newEvent]);
-    setIsModalOpen(false);
+  // Save the event to the backend
+  const handleSaveEvent = async () => {
+    try {
+      const response = await API.post('/api/events', eventDetails);
+      setEvents([...events, response.data]); // Update local state
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error saving event:', error);
+    }
   };
 
-  const getUpcomingEvents = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return events.filter(event => event.date >= today);
-  };
-
-  const getPastEvents = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return events.filter(event => event.date < today);
-  };
+  // Filter upcoming and past events
+  const today = new Date().toISOString().split('T')[0];
+  const getUpcomingEvents = () => events.filter(event => event.date >= today);
+  const getPastEvents = () => events.filter(event => event.date < today);
 
   const getMemberNameById = (id) => {
     const member = membersData.find((m) => m.id === id);

@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Components/Footer/Footer'; 
 import FooterMin from './Components/Footer/FooterMin';
 import Sidebar from './Components/SideBar/SideBar';
-import { X } from "lucide-react";
 
 function Layout({role}) {
 
@@ -62,8 +61,8 @@ useEffect(() => {
     <>
 
 
-    {console.log(isLoggedIn)}
-    <Navbar1 role={role} isLoggedIn={isLoggedIn} handleLoginToggle={handleLoginToggle} handleLogOut={handleLogOut} handleSidebarToggle={handleSidebarToggle}/>
+    {/* console.log(isLoggedIn) */}
+    <Navbar1 role={role} isLoggedIn={isLoggedIn} handleLoginToggle={handleLoginToggle} handleSidebarToggle={handleSidebarToggle}/>
     {isLoggedIn?
       (<div className={`flex flex-col lg:flex-row`}>
         <div className={`lg:h-screen lg:w-64 w-full bg-gray-200 

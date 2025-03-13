@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import API from '../Utils/axiosConfig'; // Import Axios instance
 
-const MemberProjectComponent = ({ projectsData, memberId }) => {
+const MemberProjectComponent = ({ memberId }) => {
+  const [projectsData, setProjectsData] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await API.get(`/projects/member/${memberId}`); // API request to fetch projects for the member
+        setProjectsData(response.data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    if (memberId) fetchProjects();
+  }, [memberId]);
+
   return (
     <div className="p-6 space-y-6 min-h-screen">
       {/* Ongoing Projects Section */}
@@ -14,7 +30,6 @@ const MemberProjectComponent = ({ projectsData, memberId }) => {
             .filter((project) => project.status === 'Ongoing')
             .map((project) => (
               <div key={project.id} className="bg-gray-50 p-4 rounded-lg shadow flex justify-between transition duration-300 ease-in-out transform hover:scale-105">
-                {/* Project Details */}
                 <div className="w-1/2">
                   <h3 className="text-lg font-semibold">{project.name}</h3>
                   <p>Status: {project.status}</p>
@@ -22,28 +37,19 @@ const MemberProjectComponent = ({ projectsData, memberId }) => {
                   <p>Deadline: {project.deadline}</p>
                   {project.githubLink && (
                     <p>
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
+                      <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         GitHub Repository
                       </a>
                     </p>
                   )}
                 </div>
-
-                {/* Team Member Info */}
                 <div className="w-1/2">
-                <h4 className="font-bold">Your Role: {project.team.find(member => member.id === memberId)?.name || 'Not Assigned'}</h4>
+                  <h4 className="font-bold">Your Role: {project.team.find(member => member.id === memberId)?.name || 'Not Assigned'}</h4>
                   <ul className="pl-4 list-disc">
                     {project.team
                       .filter((member) => member.id === memberId)
                       .map((member) => (
-                        <li key={member.id}>
-                          {member.name} - {member.assign}
-                        </li>
+                        <li key={member.id}>{member.name} - {member.assign}</li>
                       ))}
                   </ul>
                 </div>
@@ -70,40 +76,26 @@ const MemberProjectComponent = ({ projectsData, memberId }) => {
                   <p>Deadline: {project.deadline}</p>
                   {project.githubLink && (
                     <p>
-                      <a
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
+                      <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         GitHub Repository
                       </a>
                     </p>
                   )}
                   {project.deploymentLink && (
                     <p>
-                      <a
-                        href={project.deploymentLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
+                      <a href={project.deploymentLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                         Deployment Link
                       </a>
                     </p>
                   )}
                 </div>
-
-                {/* Team Member Info */}
                 <div className="w-1/2">
                   <h4 className="font-bold">Your Role: {project.team.find(member => member.id === memberId)?.name || 'Not Assigned'}</h4>
                   <ul className="pl-4 list-disc">
                     {project.team
                       .filter((member) => member.id === memberId)
                       .map((member) => (
-                        <li key={member.id}>
-                          {member.name} - {member.assign}
-                        </li>
+                        <li key={member.id}>{member.name} - {member.assign}</li>
                       ))}
                   </ul>
                 </div>

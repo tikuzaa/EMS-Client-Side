@@ -1,36 +1,63 @@
-import React, { useState } from 'react';
-import EventCard from './EventCard';
+import React, { useState, useEffect } from "react";
+import EventCard from "./EventCard";
+import API from "../Utils/axiosConfig"; 
 
+const MemberEvents = () => {
+  const [events, setEvents] = useState([]);
+  const [members, setMembers] = useState([]);
 
-const MemberEvents = ({eventsData, membersData}) => {
+  useEffect(() => {
+    fetchEvents();
+    fetchMembers();
+  }, []);
 
-  const [events] = useState(eventsData);
-
-  const getUpcomingEvents = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return events.filter(event => event.date >= today);
+  const fetchEvents = async () => {
+    try {
+      const response = await API.get("/api/events");
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
   };
+
+  const fetchMembers = async () => {
+    try {
+      const response = await API.get("/api/members");
+      setMembers(response.data);
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+  };
+
+  const today = new Date().setHours(0, 0, 0, 0);
   
+  const getUpcomingEvents = () => {
+    return events.filter(
+      (event) => new Date(event.date).setHours(0, 0, 0, 0) >= today
+    );
+  };
+
   const getPastEvents = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return events.filter(event => event.date < today);
+    return events.filter(
+      (event) => new Date(event.date).setHours(0, 0, 0, 0) < today
+    );
   };
 
   return (
     <div className="p-8">
-    <div className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
-      {getUpcomingEvents().map((event) => (
-          <EventCard key={event.id} event={event} isUpcoming={true} membersData= {membersData}/>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
+        {getUpcomingEvents().map((event) => (
+          <EventCard key={event._id} event={event} isUpcoming={true} membersData={members} />
         ))}
-    </div>
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Past Events</h2>
-      {getPastEvents().map((event) => (
-          <EventCard key={event.id} event={event} isUpcoming={false} membersData= {membersData}/>
+      </div>
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Past Events</h2>
+        {getPastEvents().map((event) => (
+          <EventCard key={event._id} event={event} isUpcoming={false} membersData={members} />
         ))}
+      </div>
     </div>
-  </div>
   );
 };
 

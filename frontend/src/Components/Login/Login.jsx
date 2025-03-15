@@ -39,14 +39,13 @@ const Login = ({ setRole, role }) => {
       const data = await response.json();
       console.log(data);
       if (data.success) {
-        // Handle successful login
         handleLoginToggle();
         localStorage.setItem("userData", JSON.stringify(data));
         navigate(`/${role}/home`, { state: { userData: data } });
       } else {
-        // Handle login failure
+       
         console.error("Login failed:", data.message);
-        alert(data.message); // Show an alert or set an error state
+        alert(data.message); 
       }
     } catch (error) {
       console.error("Error:", error);

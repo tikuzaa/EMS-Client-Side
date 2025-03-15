@@ -19,14 +19,18 @@ const Signup = () => {
     e.preventDefault();
     setError(''); // Clear previous errors
     try {
-      const response = await API.post('api/users/register', {
-        name,
+      const response = await API.post('/auth/signup', {
+        username: name,
         email,
         password,
         role,
       });
 
       console.log('Signup Successful:', response.data);
+
+      //save token and user data in local storage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
 
       handleLoginToggle(); // Toggle login state
 

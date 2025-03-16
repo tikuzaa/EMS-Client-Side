@@ -25,9 +25,9 @@ const EmployeeMgmt = ({setRole}) => {
           <Link to="/member/login">
             <button onClick={() => setRole('member')} className="login-btn"><span>LOGIN</span></button>
           </Link>
-          <Link to="/member/signup">
+          {/* <Link to="/member/signup">
           <button onClick={() => setRole('member')} className="signup-btn"><span>SIGN UP</span></button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

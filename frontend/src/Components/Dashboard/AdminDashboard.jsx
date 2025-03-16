@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../utils/axiosConfig"; // Import the Axios instance
+import API from "../Utils/axiosConfig"; // Import the Axios instance
 
 const AdminDashboard = () => {
   const [membersData, setMembersData] = useState([]);

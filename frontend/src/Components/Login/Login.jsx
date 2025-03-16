@@ -20,7 +20,7 @@ const Login = ({ setRole, role }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("api/users/login", { //Updated API call
+      const response = await API.post("auth/login", { //Updated API call
         email,
         password,
       });
@@ -29,6 +29,7 @@ const Login = ({ setRole, role }) => {
 
       // Save token and user data in local storage
       localStorage.setItem("userData", JSON.stringify(response.data));
+      localStorage.setItem("token", response.data.token);
 
       handleLoginToggle(); // Toggle login state
 
@@ -40,7 +41,7 @@ const Login = ({ setRole, role }) => {
     }
   };
 
-  const isMemberLogin = location.pathname === "/api/users/login"; //full path
+  const isMemberLogin = location.pathname === "/member/login"; //full path
   console.log("isMemberLogin", isMemberLogin);
   
   return (

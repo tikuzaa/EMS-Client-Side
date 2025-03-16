@@ -40,12 +40,12 @@ const Navbar = ({
               )}
 
               {isLoggedIn && <Link to="/">
-                <button
+                {/* <button
                   onClick={handleLogOut}
                   className="logout-btn hidden lg:block"
                 >
                   LogOut
-                </button>
+                </button> */}
                 {console.log(isLoggedIn)}
               </Link>}
             </div>

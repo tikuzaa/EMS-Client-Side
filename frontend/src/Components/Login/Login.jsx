@@ -20,11 +20,13 @@ const Login = ({ setRole, role }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("auth/login", { //Updated API call
+      const response = await API.post("api/members/login", { //Updated API call
         email,
         password,
       });
-
+      //const res = await API.get("/api/members"); //Added API call to get members
+      //const members = res.data;
+      //console.log("Members", members[0]._id);
       console.log("Login Successful:", response.data);
 
       // Save token and user data in local storage
@@ -42,7 +44,7 @@ const Login = ({ setRole, role }) => {
   };
 
   const isMemberLogin = location.pathname === "/member/login"; //full path
-  console.log("isMemberLogin", isMemberLogin);
+  //console.log("isMemberLogin", isMemberLogin);
   
   return (
     <div

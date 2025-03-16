@@ -17,7 +17,7 @@ function Projects({ ID }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchProjects = async () => {
       try {
         const response = await API.get(`/api/projects/${ID}`); 

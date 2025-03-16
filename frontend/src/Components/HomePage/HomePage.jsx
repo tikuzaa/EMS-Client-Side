@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import MemberCard from "../MemberCard/Member Card.jsx";
+import MemberCard from "../MemberCard/Member Card.jsx"; // Corrected import statement
 
-const HomePage = ({ members, role }) => {
+const HomePage = ({ members }) => {
   const location = useLocation();
   const userData = location.state?.userData || {};
   const [selectedDomain, setSelectedDomain] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-
+  console.log("HomePage", members);
   // Filter members based on domain and search query
   const filteredMembers = members
     .filter(
       (member) => selectedDomain === "All" || member.domain === selectedDomain
     )
     .filter((member) =>
-      member.name.toLowerCase().includes(searchQuery.toLowerCase())
+      member.username?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
   // Get unique domains for tabs
@@ -27,8 +27,8 @@ const HomePage = ({ members, role }) => {
       {" "}
       {/* Added relative z-0 to avoid overlap */}
       <div className="name px-4">
-        {userData.name ? (
-          <h1>Welcome {userData.name}</h1>
+        {members.username ? (
+          <h1>Welcome {members.username}</h1>
         ) : (
           <h1>Welcome Guest</h1>
         )}

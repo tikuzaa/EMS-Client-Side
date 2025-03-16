@@ -33,7 +33,8 @@ useEffect(() => {
 
     const handleLogOut = () => {
       //remove userdata and jwt token from local storage
-      localStorage.removeItem("userData");
+      localStorage.removeItem("memberData");
+      localStorage.removeItem("userRole");
       localStorage.removeItem("token");
       handleLoginToggle();
       console.log(isLoggedIn);

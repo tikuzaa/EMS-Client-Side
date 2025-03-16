@@ -14,7 +14,7 @@ import MemberProjects from './Components/Projects/MemberProjects.jsx';
 import AdminEvents from './Components/Events/AdminEvents.jsx';
 import MemberEvents from './Components/Events/MemberEvents.jsx';
 import Myprofile from './Components/My profile/Myprofile.jsx';
-//import { membersData } from './Data/membersData.js'; 
+import { membersData } from './Data/membersData.js'; 
 import axios from "../src/Components/Utils/axiosConfig.js";
 import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';

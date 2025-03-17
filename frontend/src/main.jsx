@@ -94,7 +94,7 @@ const Main = () => {
           <>
           <Route
             path="/member/projects"
-            element={<MemberProjects projectsData={projectsData} memberId={101} />} // Problem here
+            element={<MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} />} // Problem here
           />
           <Route
               path="/member/events"

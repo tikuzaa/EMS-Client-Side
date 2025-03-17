@@ -25,14 +25,23 @@ const EventCard = ({ event, isUpcoming, membersData }) => {
       <div className="flex flex-col mt-2 text-lg">
         <span className="font-semibold">Organizing Team:</span>
         <ul className="list-disc ml-6">
-          {event.organizingTeam.map((member) => {
-            const memberData = membersData.find(data => data.id === member.memberId);
-            return (
+        {event.organizingTeam && event.organizingTeam.map((member) => {
+          let memberData = null;
+
+          for (const data of membersData) { 
+              if (data._id === member.memberId) {
+                  memberData = data;
+                  break; 
+              }
+          }
+          console.log("Matching Member Data:", memberData);
+
+          return (
               <li key={member.memberId}>
-                {member.assignment}: {memberData ? memberData.name : "Member not found"}
+                  {member.assignment}: {memberData ? memberData.username : "Member not found"}
               </li>
-            );
-          })}
+          );
+        })}
         </ul>
         <span>{event.team}</span>
       </div>

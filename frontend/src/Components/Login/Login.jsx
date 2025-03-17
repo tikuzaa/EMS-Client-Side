@@ -31,11 +31,13 @@ const Login = ({ setRole, role }) => {
       
       const userData = JSON.stringify(response.data.user.username);
       const userRole = response.data.user.role;
-      console.log("Role", userRole);
+      const userId = response.data.user.id;
+      console.log("Role", userId);
       
       // Save token and user data in local storage
       localStorage.setItem("memberData", userData);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("memberId", userId)
       localStorage.setItem("userRole", userRole);
       localStorage.setItem("userId", response.data.user.id);
       localStorage.setItem('userData', JSON.stringify(response.data));

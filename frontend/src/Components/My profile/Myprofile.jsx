@@ -6,7 +6,7 @@ import Attendance from "./Attendance";
 import Information from "./Information";
 import Profileinfo from "./Profileinfo";
 
-const Myprofile = ( { members } ) => {
+const Myprofile = () => {
   const { id } = useParams();
   const [member, setMember] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,11 +27,7 @@ const Myprofile = ( { members } ) => {
     };
 
       fetchMember();
-    } else {
-      setError("Member not found");
-      setLoading(false);
-    }
-  }, [id, members]);
+    }, [id]); 
 
   if (loading) {
     return <div className="text-center text-gray-500">Loading...</div>;

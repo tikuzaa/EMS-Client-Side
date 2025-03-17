@@ -16,8 +16,8 @@ import MemberEvents from './Components/Events/MemberEvents.jsx';
 import Myprofile from './Components/My profile/Myprofile.jsx';
 //import { membersData } from './Data/membersData.js'; 
 import axios from "../src/Components/Utils/axiosConfig.js";
-import { projectsData } from './Data/projectsData.js';
-import { eventsData } from './Data/eventsData.js';
+//import { projectsData } from './Data/projectsData.js';
+//import { eventsData } from './Data/eventsData.js';
 import Modal from "react-modal";
 
 

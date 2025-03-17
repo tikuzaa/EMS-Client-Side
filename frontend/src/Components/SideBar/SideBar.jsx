@@ -4,7 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
 
   const userRole = localStorage.getItem('userRole');
-  console.log(userRole);
+  //console.log(userRole);
 
 
   return (
@@ -66,7 +66,7 @@ const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
           <li>
             {userRole === "member" && 
             <NavLink 
-              to={`/${localStorage.getItem("userRole")}/myprofile/${localStorage.getItem("userId")}`} 
+              to={`/${localStorage.getItem("userRole")}/myprofile/${localStorage.getItem("userId")}`}
               className={({ isActive }) => 
                 isActive 
                   ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 

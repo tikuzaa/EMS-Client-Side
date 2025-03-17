@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import API from "../Utils/axiosConfig"; // Import the Axios instance
 
-const AdminDashboard = ({ membersData, projectsData, eventsData }) => {
+const AdminDashboard = () => {
+  const [membersData, setMembersData] = useState([]);
+  const [projectsData, setProjectsData] = useState([]);
+  const [eventsData, setEventsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from the backend
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [membersRes, projectsRes, eventsRes] = await Promise.all([
+          API.get("/api/members"),
+          API.get("/api/projects"),
+          API.get("/api/events"),
+        ]);
+
+        setMembersData(membersRes.data);
+        setProjectsData(projectsRes.data);
+        setEventsData(eventsRes.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load data");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Show loading state
+  if (loading) return <p className="text-center text-xl">Loading...</p>;
+
+  // Show error state
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+
   // Get total members
   const totalMembers = membersData.length;
 
@@ -18,9 +55,10 @@ const AdminDashboard = ({ membersData, projectsData, eventsData }) => {
     (member) => member.performance <= 20 || member.attendance <= 20
   );
 
+  // Filter upcoming events
   const getUpcomingEvents = () => {
-    const today = new Date().toISOString().split('T')[0];
-    return eventsData.filter(event => event.date >= today);
+    const today = new Date().toISOString().split("T")[0];
+    return eventsData.filter((event) => event.date >= today);
   };
 
   return (
@@ -47,6 +85,7 @@ const AdminDashboard = ({ membersData, projectsData, eventsData }) => {
       {/* Overall Member Statistics */}
       <section className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Overall Members Statistics</h2>
+        
         {/* Active Members Section */}
         <div className="mb-6">
           <h3 className="text-xl font-semibold mb-4">Active Members</h3>

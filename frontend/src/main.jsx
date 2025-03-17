@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode, useState , useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
@@ -14,16 +14,37 @@ import MemberProjects from './Components/Projects/MemberProjects.jsx';
 import AdminEvents from './Components/Events/AdminEvents.jsx';
 import MemberEvents from './Components/Events/MemberEvents.jsx';
 import Myprofile from './Components/My profile/Myprofile.jsx';
-import { membersData } from './Data/membersData.js';
+import { membersData } from './Data/membersData.js'; 
+import axios from "../src/Components/Utils/axiosConfig.js";
 import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';
 
 const userData = localStorage.getItem("userData");
 localStorage.setItem("userData", userData)
 
+const App = ({ setMembersData }) => {
+  
+
+  return null; // No need to render anything
+};
+
 const Main = () => {
   // Set initial role; modify 'member' or 'admin' as required
   const [role, setRole] = useState('member');
+  const [membersData, setMembersData] = useState([]); // Members state here
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get("/api/members");
+        setMembersData(response.data); 
+      } catch (err) {
+        console.error("Error fetching members:", err);
+      }
+    };
+
+    fetchMembers();
+  }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -37,8 +58,8 @@ const Main = () => {
         <Route path="/member/signup" element={<Signup />} />
 
         {/* Home Page for Both Roles */}
-        <Route path="/admin/home" element={<HomePage members={membersData} role={role} />} />
-        <Route path="/member/home" element={<HomePage members={membersData} role={role} />} />
+        <Route path="/admin/home" element={<HomePage />} />
+        <Route path="/member/home" element={<HomePage members={membersData} />} /> {/* members={membersData} role={role} */}
 
         {/* Admin Dashboard */}
         {role === 'admin' && (
@@ -69,7 +90,7 @@ const Main = () => {
           <>
           <Route
             path="/member/projects"
-            element={<MemberProjects projectsData={projectsData} memberId={101} />} // pass the logged-in memberId
+            element={<MemberProjects projectsData={projectsData} memberId={101} />} // Problem here
           />
           <Route
               path="/member/events"

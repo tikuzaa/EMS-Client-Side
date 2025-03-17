@@ -1,11 +1,11 @@
-// Login.js
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Link,
   useNavigate,
   useLocation,
   useOutletContext,
 } from "react-router-dom";
+import API from "../Utils/axiosConfig"; 
 import background from "../../assets/Images/background.jpg";
 
 const Login = ({ setRole, role }) => {
@@ -15,45 +15,42 @@ const Login = ({ setRole, role }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); //Added state for error messages
 
-  // auto login problem
-  // useEffect(() => {
-  //   if (localStorage.getItem("userData")) {
-  //     navigate(`/${role}/home`, {
-  //       state: { userData: JSON.parse(localStorage.getItem("userData")) },
-  //     });
-  //   }
-  // }, []);
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await API.post("api/members/login", { //Updated API call
+        email,
+        password,
       });
+      //const res = await API.get("/api/members"); //Added API call to get members
+      //const members = res.data;
+      //console.log("Members", members[0]._id);
+      console.log("Login Successful:", response.data.user);
+      
+      const userData = JSON.stringify(response.data.user.username);
+      const userRole = response.data.user.role;
+      console.log("Role", userRole);
+      
+      // Save token and user data in local storage
+      localStorage.setItem("memberData", userData);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userRole", userRole);
 
-      const data = await response.json();
-      console.log(data);
-      if (data.success) {
-        handleLoginToggle();
-        localStorage.setItem("userData", JSON.stringify(data));
-        navigate(`/${role}/home`, { state: { userData: data } });
-      } else {
-       
-        console.error("Login failed:", data.message);
-        alert(data.message); 
-      }
+      handleLoginToggle(); // Toggle login state
+
+      // Navigate to appropriate dashboard
+      navigate(`/${userRole}/home`, { state: { userData: response.data.user } });
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Login Error:", error.response?.data || error.message);
+      setError(error.response?.data?.message || "Login failed"); // Show error message
     }
   };
 
-  const isMemberLogin = location.pathname === "/member/login";
-
+  const isMemberLogin = location.pathname === "/member/login"; //full path
+  //console.log("isMemberLogin", isMemberLogin);
+  
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center"
@@ -85,7 +82,7 @@ const Login = ({ setRole, role }) => {
             ADMIN
           </Link>
         </div>
-        <div>
+        <form onSubmit={handleLogin}> {/*Wrapped inputs in <form> */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Email</label>
             <input
@@ -106,31 +103,14 @@ const Login = ({ setRole, role }) => {
               required
             />
           </div>
-          <Link to={`/${role}/home`}>
-            <button
-              type="submit"
-              onClick={() => {
-                handleLogin();
-                handleLoginToggle();
-              }}
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
-            >
-              Login
-            </button>
-          </Link>
-        </div>
-        <div className="mt-4 text-center">
-          {role === "admin" ? (
-            ""
-          ) : (
-            <Link
-              to={`/member/signup`}
-              className="text-blue-500 hover:underline"
-            >
-              don't have an account? Sign Up
-            </Link>
-          )}
-        </div>
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>} {/*Show login error */}
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+          >
+            Login
+          </button>
+        </form>
       </div>
     </div>
   );

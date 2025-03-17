@@ -1,33 +1,52 @@
-// Signup.js
 import React, { useState } from 'react';
-import {Link, useLocation, useOutletContext} from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import API from '../Utils/axiosConfig';
 import background from '../../assets/Images/background.jpg';
 
 const Signup = () => {
-const location = useLocation();
-const role = location.state?.role || 'member';
+  const location = useLocation();
+  const navigate = useNavigate();
+  const role = location.state?.role || 'member';
 
-const { handleLoginToggle } = useOutletContext();
+  const { handleLoginToggle } = useOutletContext();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Logic for signup based on role
-    if (role === 'admin') {
-      console.log('Signing up as admin');
-    } else {
-      console.log('Signing up as member');
+    setError(''); // Clear previous errors
+    try {
+      const response = await API.post('/auth/signup', {
+        username: name,
+        email,
+        password,
+        role,
+      });
+
+      console.log('Signup Successful:', response.data);
+
+      //save token and user data in local storage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      handleLoginToggle(); // Toggle login state
+
+      navigate(role === 'admin' ? '/admin/home' : '/member/home');
+    } catch (error) {
+      console.error('Signup Error:', error.response?.data || error.message);
+      setError(error.response?.data?.message || 'Signup failed. Please try again.');
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-cover bg-center"
-    style={{ backgroundImage: `url(${background})` }}>
+      style={{ backgroundImage: `url(${background})` }}>
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">{role === 'admin' ? 'Admin' : 'Member'} Signup</h2>
+        {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
         <form onSubmit={handleSignup}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Name</label>
@@ -59,15 +78,12 @@ const { handleLoginToggle } = useOutletContext();
               required
             />
           </div>
-          <Link to={`/member/home`}>
           <button
             type="submit"
-            onClick={handleLoginToggle}
             className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition duration-200"
           >
             Sign Up
           </button>
-          </Link>
         </form>
         <div className="mt-4 text-center">
           <Link to="/member/login" className="text-blue-500 hover:underline">

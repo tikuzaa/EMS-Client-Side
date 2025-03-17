@@ -75,7 +75,7 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
           </li>
           <li>
             <Link to='/'>
-              <button onClick={handleLogOut} className="logout-btn block lg:hidden">LogOut</button>
+              <button onClick={handleLogOut} className="logout-btn block ">LogOut</button>
             </Link>
           </li>
         </ul>

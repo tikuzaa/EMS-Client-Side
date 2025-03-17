@@ -14,7 +14,9 @@ const MemberEvents = () => {
   const fetchEvents = async () => {
     try {
       const response = await API.get("/api/events");
-      setEvents(response.data);
+      setEvents(response.data.data);
+      console.log("Events fetched successfully:", response.data.data);
+      
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -32,15 +34,15 @@ const MemberEvents = () => {
   const today = new Date().setHours(0, 0, 0, 0);
   
   const getUpcomingEvents = () => {
-    return events.filter(
+    return Array.isArray(events) ? events.filter(
       (event) => new Date(event.date).setHours(0, 0, 0, 0) >= today
-    );
+    ) : [];
   };
 
   const getPastEvents = () => {
-    return events.filter(
+    return Array.isArray(events) ? events.filter(
       (event) => new Date(event.date).setHours(0, 0, 0, 0) < today
-    );
+    ) : [];
   };
 
   return (

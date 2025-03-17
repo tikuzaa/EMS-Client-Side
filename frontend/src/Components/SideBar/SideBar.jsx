@@ -73,6 +73,17 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
             
             }
           </li>
+          <li> {/* admin add new member button*/ }
+            {role === "admin" && 
+            <NavLink 
+              to={`/${member}/addmember`} 
+              className='button'   
+            >
+              Add Member
+            </NavLink>
+            
+            }
+          </li>
           <li>
             <Link to='/'>
               <button onClick={handleLogOut} className="logout-btn block ">LogOut</button>

@@ -12,12 +12,14 @@ function Layout({role}) {
 
 useEffect(() => {
   const userData = localStorage.getItem("userData");
-  if (userData !== "null") {
+  if (userData) {
     setIsLoggedIn(true);
   } else {
     setIsLoggedIn(false);
   }
 }, [setIsLoggedIn]);
+
+console.log(isLoggedIn);
 
     
   
@@ -26,7 +28,7 @@ useEffect(() => {
         localStorage.removeItem("userData"); 
         setIsLoggedIn(false);
       } else {
-        localStorage.setItem("userData", "someUserData");
+        
         setIsLoggedIn(true);
       }
     };

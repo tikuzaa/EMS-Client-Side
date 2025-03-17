@@ -37,7 +37,9 @@ const Login = ({ setRole, role }) => {
       localStorage.setItem("memberData", userData);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userRole", userRole);
+      localStorage.setItem("userId", response.data.user.id);
       localStorage.setItem('userData', JSON.stringify(response.data));
+
 
       handleLoginToggle(); // Toggle login state
 

@@ -9,7 +9,7 @@ import { FaLinkedin, FaTwitter, FaGithub, FaUserShield } from 'react-icons/fa'; 
         <div className="bg-blue-500 h-[160px] flex items-center justify-center ">
           {/* <div className="w-24 h-24 bg-black rounded-full absolute -bottom-5"></div> */}
           <img
-          className="w-[159px] h-[159px] rounded-full object-cover mb-4 absolute -bottom-10"
+          className="w-36 h-36 rounded-full mt-4 object-cover mb-4  -bottom-10"
           src={avatarUrl}  // Use avatarUrl instead of profileImage
           //alt={`${name}'s profile`}
           />

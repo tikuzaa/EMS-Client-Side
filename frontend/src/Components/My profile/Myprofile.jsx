@@ -11,12 +11,14 @@ const Myprofile = () => {
   const [member, setMember] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchMember = async () => {
       try {
-        const response = await API.get(`/api/members/${id}`); // Use API instance
+        const response = await API.get(`/api/members/${userId}`); // Use API instance
         setMember(response.data);
+        console.log("member data:", response.data);
       } catch (err) {
         setError("Member not found");
       } finally {

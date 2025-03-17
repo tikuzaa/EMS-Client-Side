@@ -14,6 +14,8 @@ const HomePage = () => {
       return {}; // Return an empty object if parsing fails
     }
   })();
+
+  const userData = location.state?.userData || storedUserData;
   
 
   const [members, setMembers] = useState([]);
@@ -25,6 +27,7 @@ const HomePage = () => {
     const fetchMembers = async () => {
       try {
         const response = await API.get("api/members"); // Fetch all members
+        console.log("Fetched Members:", response.data);
         setMembers(response.data);
       } catch (error) {
         console.error("Error fetching members:", error);
@@ -35,15 +38,27 @@ const HomePage = () => {
   }, []);
 
   // Filter the logged-in user from the members list
-  const loggedInMember = members.find(member => member.email === storedUserData.email);
+  const loggedInMember = members.find(member => member.email === userData.email);
 
   // Filter members based on domain and search query
   const filteredMembers = members
-    .filter(member => selectedDomain === "All" || member.domain === selectedDomain)
-    .filter(member => member.username?.toLowerCase().includes(searchQuery.toLowerCase()));
+  .filter(member => 
+    selectedDomain === "All" || 
+    (Array.isArray(member.domain) && member.domain.some(d => d.trim().toLowerCase() === selectedDomain))
+  )
+  .filter(member => member.username?.toLowerCase().includes(searchQuery.toLowerCase()));
+
+
 
   // Get unique domains for filtering
-  const domains = ["All", ...new Set(members.map(member => member.domain))];
+  const domains = ["All", ...new Set(
+    members.map(member => 
+      Array.isArray(member.domain) && member.domain.length > 0
+        ? member.domain[0].trim().toLowerCase() // Extract first domain and normalize
+        : "unknown" // Fallback for missing domains
+    )
+  )];
+
 
   return (
     <div className="max-w-7xl mx-auto p-4">

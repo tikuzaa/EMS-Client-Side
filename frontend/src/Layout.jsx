@@ -26,7 +26,6 @@ useEffect(() => {
         localStorage.removeItem("userData"); 
         setIsLoggedIn(false);
       } else {
-        localStorage.setItem("userData", "someUserData");
         setIsLoggedIn(true);
       }
     };

@@ -25,7 +25,7 @@ const MemberProjectComponent = ({ memberId }) => {
         className="shadow-lg rounded-lg p-6"
       >
         <h2 className="text-2xl font-bold mb-4">Ongoing Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 z-0">
           {projectsData
             .filter((project) => project.status === 'Ongoing')
             .map((project) => (

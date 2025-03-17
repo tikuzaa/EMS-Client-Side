@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        scrollBehavior: ['smooth'],
         NewAmsterdam:  ["New Amsterdam", "sans-serif"],
         Exo:  ["Exo", "sans-serif"],
 

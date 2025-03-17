@@ -20,21 +20,31 @@ const Login = ({ setRole, role }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("auth/login", { //Updated API call
+      const response = await API.post("api/members/login", { //Updated API call
         email,
         password,
       });
-
-      console.log("Login Successful:", response.data);
-
+      //const res = await API.get("/api/members"); //Added API call to get members
+      //const members = res.data;
+      //console.log("Members", members[0]._id);
+      console.log("Login Successful:", response.data.user);
+      
+      const userData = JSON.stringify(response.data.user.username);
+      const userRole = response.data.user.role;
+      console.log("Role", userRole);
+      
       // Save token and user data in local storage
-      localStorage.setItem("userData", JSON.stringify(response.data));
+      localStorage.setItem("memberData", userData);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userRole", userRole);
+      localStorage.setItem("userId", response.data.user.id);
+      localStorage.setItem('userData', JSON.stringify(response.data));
+
 
       handleLoginToggle(); // Toggle login state
 
       // Navigate to appropriate dashboard
-      navigate(`/${role}/home`, { state: { userData: response.data } });
+      navigate(`/${userRole}/home`, { state: { userData: response.data.user } });
     } catch (error) {
       console.error("Login Error:", error.response?.data || error.message);
       setError(error.response?.data?.message || "Login failed"); // Show error message
@@ -42,7 +52,7 @@ const Login = ({ setRole, role }) => {
   };
 
   const isMemberLogin = location.pathname === "/member/login"; //full path
-  console.log("isMemberLogin", isMemberLogin);
+  //console.log("isMemberLogin", isMemberLogin);
   
   return (
     <div
@@ -104,18 +114,6 @@ const Login = ({ setRole, role }) => {
             Login
           </button>
         </form>
-        <div className="mt-4 text-center">
-          {role === "admin" ? (
-            ""
-          ) : (
-            <Link
-              to={`/member/signup`}
-              className="text-blue-500 hover:underline"
-            >
-              Don't have an account? Sign Up
-            </Link>
-          )}
-        </div>
       </div>
     </div>
   );

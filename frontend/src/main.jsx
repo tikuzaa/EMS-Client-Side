@@ -20,6 +20,7 @@ import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';
 import Modal from "react-modal";
 import { UserRoleProvider } from './Components/Utils/UserRoleContext.jsx';
+import MemberProfile from '../../MemberProfile/MemberProfile.jsx';
 
 Modal.setAppElement("#root");
 
@@ -59,6 +60,7 @@ const Main = () => {
         <Route path="/member/projects" element={<MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} />} />
         <Route path="/member/events" element={<MemberEvents eventsData={eventsData} membersData={membersData} />} />
         <Route path="/member/myprofile/:id" element={<Myprofile members={membersData} />} />
+        <Route path="/member/memberprofile/:id" element={<MemberProfile/>} />
         <Route path="/admin/myprofile/:id" element={<Myprofile members={membersData} />} />
         <Route path="*" element={<Error />} />
       </Route>

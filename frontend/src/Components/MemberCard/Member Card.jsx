@@ -2,9 +2,9 @@ import React from 'react';
 
 import { FaLinkedin, FaTwitter, FaGithub, FaUserShield } from 'react-icons/fa'; // Icons for social media and admin
 import MemberProfile from '../../../../MemberProfile/MemberProfile';
+import { NavLink } from 'react-router-dom';
 
 const handleProfileVeiw = () => {
-  <MemberProfile memberId={member._id}/>
 };
 
   const MemberCard = ({member}) => {
@@ -30,9 +30,14 @@ const handleProfileVeiw = () => {
           <p className="text-[20px] p-1.5">Domain: {domain}</p>
           <p className="text-[20px] p-1.5">Skills: {skills.join(', ')}</p>
           <div className="p-4">
-            <button onClick={handleProfileVeiw} className="bg-blue-500 text-[20px] rounded-[12px] text-white py-2 px-4  hover:bg-blue-700 w-[195px] h-[46px]">
+            <NavLink 
+            to={`/member/memberprofile/${member._id}`}
+            >
+              <button onClick={handleProfileVeiw} className="bg-blue-500 text-[20px] rounded-[12px] text-white py-2 px-4  hover:bg-blue-700 w-[195px] h-[46px]">
               View Profile
             </button>
+            </NavLink>
+            
           </div>
         </div>
       </div>

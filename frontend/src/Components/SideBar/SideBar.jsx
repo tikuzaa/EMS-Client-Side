@@ -1,14 +1,19 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
+const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
+
+  const userRole = localStorage.getItem('userRole');
+  console.log(userRole);
+
+
   return (
-    <aside className="w-64 fixed  lg:h-screen z-50  bg-gray-200 rounded-lg text-gray-800 lg:relative overflow-y-auto font-poppins">
+    <aside className="w-64 fixed  lg:h-screen z-2  bg-gray-200 rounded-lg text-gray-800 lg:relative overflow-y-auto font-poppins">
       <nav className="mt-8 ml-2">
         <ul className="space-y-4 mr-2">
           <li>
             <NavLink 
-              to={`/${role}/home`} 
+              to={`/${userRole}/home`} 
               className={({ isActive }) => 
                 isActive 
                   ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 
@@ -19,10 +24,10 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
             </NavLink>
           </li>
           {
-            role === 'admin' ? (
+            userRole === 'admin' ? (
               <li>
                 <NavLink 
-                  to={`/${role}/dashboard`} 
+                  to={`/${userRole}/dashboard`} 
                   className={({ isActive }) => 
                     isActive 
                       ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 
@@ -36,7 +41,7 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
           }
           <li>
             <NavLink 
-              to={`/${role}/projects`} 
+              to={`/${userRole}/projects`} 
               className={({ isActive }) => 
                 isActive 
                   ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 
@@ -48,7 +53,7 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
           </li>
           <li>
             <NavLink 
-              to={`/${role}/events`} 
+              to={`/${userRole}/events`} 
               className={({ isActive }) => 
                 isActive 
                   ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 
@@ -58,10 +63,9 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
               Events
             </NavLink>
           </li>
-          <li>
-            {role === "member" && 
+          <li> 
             <NavLink 
-              to={`/${role}/myprofile`} 
+              to={`/${localStorage.getItem("userRole")}/myprofile/${localStorage.getItem("userId")}`} 
               className={({ isActive }) => 
                 isActive 
                   ? 'bg-blue-500 text-white p-2 rounded-md block transition duration-300 ease-in-out' 
@@ -71,19 +75,16 @@ const Sidebar = ({ role, handleLoginToggle, handleLogOut }) => {
               My Profile
             </NavLink>
             
-            }
           </li>
-          <li> {/* admin add new member button*/ }
-            {role === "admin" && 
-            <NavLink 
-              to={`/${member}/addmember`} 
-              className='button'   
+          {userRole === "admin" && (
+          <li>
+            <button onClick={handleAddMember}
+            className="hover:scale-105 transition duration-300 ease-in-out p-2  hover:bg-blue-300 rounded-md w-full flex justify-start"
             >
-              Add Member
-            </NavLink>
-            
-            }
+              Add member
+            </button>
           </li>
+          )}
           <li>
             <Link to='/'>
               <button onClick={handleLogOut} className="logout-btn block ">LogOut</button>

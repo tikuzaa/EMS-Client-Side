@@ -18,7 +18,6 @@ const Myprofile = () => {
       try {
         const response = await API.get(`/api/members/${userId}`); // Use API instance
         setMember(response.data);
-        console.log("member data:", member);
       } catch (err) {
         setError("Member not found");
       } finally {
@@ -60,7 +59,7 @@ const Myprofile = () => {
                 <Information member={member} />
               </div>
               <div className="w-full overflow-hidden">
-                <Projects id={member._id} />
+                <Projects id={userId} />
               </div>
             </div>
           </div>

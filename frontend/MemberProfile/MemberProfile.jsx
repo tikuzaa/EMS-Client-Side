@@ -65,7 +65,7 @@ function MemberProfile() {
                 <MemberInformation member={member} />
               </div>
               <div className="w-full overflow-hidden">
-                {/* <MemberProjects id={member._id} /> */}
+                <MemberProjects id={member._id} />
               </div>
             </div>
           </div>

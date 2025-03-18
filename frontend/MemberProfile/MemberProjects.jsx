@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import API from "../src/Components/Utils/axiosConfig.js";
 
-function MemberProjects({ project }) {
+function ProjectRow({ project }) {
   return (
     <tr key={project.id} className="hover:bg-blue-300 transition-colors">
       <td className="p-2 border-b rounded-s-3xl">{project.name}</td>
@@ -12,17 +12,18 @@ function MemberProjects({ project }) {
   );
 }
 
-function Projects({ ID }) {
+function MemberProjects({ ID }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => { 
     const fetchProjects = async () => {
       try {
-        const response = await API.get(`/api/projects/${ID}`); 
-        setProjects(response.data);
-        console.log(response.data);
+        const response = await API.get(`/api/projects?memberId=${userId}`); 
+        setProjects(response.data.data);
+        console.log(response.data.data);
       } catch (err) {
         setError("Error fetching project data");
       } finally {
@@ -55,8 +56,10 @@ function Projects({ ID }) {
             </tr>
           </thead>
           <tbody>
-            {projects.map((project) => (
-              <ProjectRow key={project.id} project={project} />
+          {projects
+            .filter((project) => project.team.some(member => member.id?.['_id'] === userId))
+            .map((project) => (
+              <ProjectRow key={project._id} project={project} />
             ))}
           </tbody>
         </table>

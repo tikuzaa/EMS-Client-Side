@@ -1,5 +1,5 @@
 function Information({ member }) {
-  console.log("information",member) // logging for testing purposes
+// logging for testing purposes
 
     return (
       <div className="bg-blue-100 px-2 w-full overflow-x-hidden rounded-lg py-4 space-y-4 shadow-md  flex-wrap ">

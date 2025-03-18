@@ -72,9 +72,7 @@ const Main = () => {
               path="/admin/dashboard"
               element={
                 <AdminDashboard
-                  membersData={membersData}
-                  projectsData={projectsData}
-                  eventsData={eventsData}
+                  
                 />
               }
             />
@@ -101,6 +99,7 @@ const Main = () => {
               element={<MemberEvents eventsData={eventsData} membersData={membersData} />}
             />
             <Route path="/member/myprofile/:id" element={<Myprofile members={membersData} role={role} />} />
+            <Route path="/admin/myprofile/:id" element={<Myprofile members={membersData} role={role} />} />
             </>
         )}
 

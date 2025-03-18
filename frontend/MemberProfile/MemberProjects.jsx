@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../src/Components/Utils/axiosConfig.js";
+import { useParams } from "react-router-dom";
 
 function ProjectRow({ project }) {
   return (
@@ -12,11 +13,12 @@ function ProjectRow({ project }) {
   );
 }
 
-function MemberProjects({ ID }) {
+function MemberProjects({  }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const userId = localStorage.getItem("userId");
+  const ID = useParams().id;
 
   useEffect(() => { 
     const fetchProjects = async () => {
@@ -57,7 +59,7 @@ function MemberProjects({ ID }) {
           </thead>
           <tbody>
           {projects
-            .filter((project) => project.team.some(member => member.id?.['_id'] === userId))
+            .filter((project) => project.team.some(member => member.id?.['_id'] === ID))
             .map((project) => (
               <ProjectRow key={project._id} project={project} />
             ))}

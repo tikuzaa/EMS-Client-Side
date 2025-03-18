@@ -25,12 +25,14 @@ const Login = () => {
 
       const userData = JSON.stringify(response.data.user.username);
       const userRole = response.data.user.role;
+      const userId = response.data.user.id;
       console.log("Role", userRole);
 
       localStorage.setItem("memberData", userData);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userRole", userRole);
       localStorage.setItem('userData', JSON.stringify(response.data));
+      localStorage.setItem('userId', userId);
 
       setRole(userRole); // Update the role in context
 

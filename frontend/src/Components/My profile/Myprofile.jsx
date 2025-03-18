@@ -12,7 +12,7 @@ const Myprofile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const userId = localStorage.getItem("userId");
-
+  const role = localStorage.getItem("userRole");
   useEffect(() => {
     const fetchMember = async () => {
       try {
@@ -44,9 +44,12 @@ const Myprofile = () => {
         <div className="p-4 space-y-6 flex flex-col w-full items-center">
           <header className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
             <h1 className="text-2xl sm:text-3xl font-semibold">My Profile</h1>
-            <button className="text-red-500 bg-red-100 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white transition">
-              Delete Account
-            </button>
+            {role === "admin" && (
+              <button className="text-red-500 bg-red-100 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white transition">
+                Delete Account
+              </button>
+)}
+            
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">

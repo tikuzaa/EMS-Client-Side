@@ -19,7 +19,7 @@ const EventComponent = ({eventsData, membersData}) => {
   const fetchEvents = async () => {
     try {
       const response = await API.get('/api/events');
-      setEvents(response.data);
+      setEvents(response.data.data);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -81,7 +81,7 @@ const EventComponent = ({eventsData, membersData}) => {
     <div className="p-6 space-y-6 min-h-screen">
       {/* Upcoming Events Section */}
       <section className="bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
+        {/* <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {getUpcomingEvents().map((event) => (
             <div key={event.id} className="bg-gray-50 p-4 rounded-lg shadow">
@@ -98,7 +98,7 @@ const EventComponent = ({eventsData, membersData}) => {
               </ul>
             </div>
           ))}
-        </div>
+        </div> */}
         <button
           className="mt-6 bg-green-500 text-white py-2 px-4 rounded"
           onClick={handleAddEvent}

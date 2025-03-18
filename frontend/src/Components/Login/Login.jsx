@@ -1,59 +1,50 @@
-import React, { useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useLocation,
-  useOutletContext,
-} from "react-router-dom";
-import API from "../Utils/axiosConfig"; 
+import React, { useState, useContext } from "react";
+import { Link, useNavigate, useLocation, useOutletContext } from "react-router-dom";
+import API from "../Utils/axiosConfig";
 import background from "../../assets/Images/background.jpg";
+import { UserRoleContext } from "../Utils/UserRoleContext.jsx";
 
-const Login = ({ setRole, role }) => {
+const Login = () => {
   const { handleLoginToggle } = useOutletContext();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setRole } = useContext(UserRoleContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null); //Added state for error messages
+  const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("api/members/login", { //Updated API call
+      const response = await API.post("api/members/login", {
         email,
         password,
       });
-      //const res = await API.get("/api/members"); //Added API call to get members
-      //const members = res.data;
-      //console.log("Members", members[0]._id);
       console.log("Login Successful:", response.data.user);
-      
+
       const userData = JSON.stringify(response.data.user.username);
       const userRole = response.data.user.role;
       console.log("Role", userRole);
-      
-      // Save token and user data in local storage
+
       localStorage.setItem("memberData", userData);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userRole", userRole);
-      localStorage.setItem("userId", response.data.user.id);
       localStorage.setItem('userData', JSON.stringify(response.data));
 
+      setRole(userRole); // Update the role in context
 
-      handleLoginToggle(); // Toggle login state
+      handleLoginToggle();
 
-      // Navigate to appropriate dashboard
       navigate(`/${userRole}/home`, { state: { userData: response.data.user } });
     } catch (error) {
       console.error("Login Error:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "Login failed"); // Show error message
+      setError(error.response?.data?.message || "Login failed");
     }
   };
 
-  const isMemberLogin = location.pathname === "/member/login"; //full path
-  //console.log("isMemberLogin", isMemberLogin);
-  
+  const isMemberLogin = location.pathname === "/member/login";
+
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center"
@@ -61,31 +52,7 @@ const Login = ({ setRole, role }) => {
     >
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-4">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <div className="flex mb-6">
-          <Link
-            to="/member/login"
-            className={`flex-1 text-center py-2 text-lg font-semibold rounded-t-lg ${
-              isMemberLogin
-                ? "bg-blue-100 text-blue-600"
-                : "bg-gray-200 text-gray-500"
-            }`}
-            onClick={() => setRole("member")}
-          >
-            MEMBER
-          </Link>
-          <Link
-            to="/admin/login"
-            className={`flex-1 text-center py-2 text-lg font-semibold rounded-t-lg ${
-              !isMemberLogin
-                ? "bg-blue-100 text-blue-600"
-                : "bg-gray-200 text-gray-500"
-            }`}
-            onClick={() => setRole("admin")}
-          >
-            ADMIN
-          </Link>
-        </div>
-        <form onSubmit={handleLogin}> {/*Wrapped inputs in <form> */}
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Email</label>
             <input
@@ -106,7 +73,7 @@ const Login = ({ setRole, role }) => {
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>} {/*Show login error */}
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"

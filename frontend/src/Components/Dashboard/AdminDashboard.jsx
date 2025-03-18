@@ -19,8 +19,10 @@ const AdminDashboard = () => {
         ]);
 
         setMembersData(membersRes.data);
-        setProjectsData(projectsRes.data);
-        setEventsData(eventsRes.data);
+        setProjectsData(projectsRes.data.data);
+        setEventsData(eventsRes.data.data);
+        console.log("Data fetched successfully",membersRes.data, projectsRes.data.data, eventsRes.data.data);
+        
         setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -119,13 +121,15 @@ const AdminDashboard = () => {
       <section className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projectsData.map((project) => (
-            <div key={project.id} className="bg-gray-50 p-4 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">{project.name}</h3>
-              <p>Progress: {project.progress}%</p>
-              <p>Status: {project.status}</p>
-            </div>
-          ))}
+          {projectsData
+            .filter((project) => project.progress < 100)
+            .map((project) => (
+              <div key={project.id} className="bg-gray-50 p-4 rounded-lg shadow">
+                <h3 className="text-lg font-semibold">{project.name}</h3>
+                <p>Progress: {project.progress}%</p>
+                <p>Status: {project.status}</p>
+              </div>
+            ))}
         </div>
       </section>
 

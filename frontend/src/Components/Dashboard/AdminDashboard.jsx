@@ -21,6 +21,8 @@ const AdminDashboard = () => {
         setMembersData(membersRes.data);
         setProjectsData(projectsRes.data);
         setEventsData(eventsRes.data);
+        console.log("Data fetched successfully",membersData,projectsData,eventsData);
+        
         setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);

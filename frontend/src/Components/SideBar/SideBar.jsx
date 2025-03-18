@@ -63,8 +63,7 @@ const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
               Events
             </NavLink>
           </li>
-          <li>
-            {userRole === "member" && 
+          <li> 
             <NavLink 
               to={`/${localStorage.getItem("userRole")}/myprofile/${localStorage.getItem("userId")}`} 
               className={({ isActive }) => 
@@ -76,7 +75,6 @@ const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
               My Profile
             </NavLink>
             
-            }
           </li>
           {userRole === "admin" && (
           <li>

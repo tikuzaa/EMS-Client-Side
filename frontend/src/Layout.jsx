@@ -96,7 +96,7 @@ useEffect(() => {
     }
 
 {isLoggedIn ? <FooterMin /> : <Footer />}
-<AddMemberModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+{isModalOpen && <AddMemberModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
     </>
   );
 }

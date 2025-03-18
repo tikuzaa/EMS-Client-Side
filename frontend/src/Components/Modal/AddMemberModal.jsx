@@ -18,7 +18,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
     yearOfPassing: "",
     stream: "",
     universityRollNumber: "",
-    avatarUrl: "",
+    avatarUrl: "", // This will store the Base64 string
     skills: [],
     projects: [],
     events: [],
@@ -69,6 +69,26 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index),
     }));
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const base64 = await toBase64(file);
+      setNewMember((prev) => ({
+        ...prev,
+        avatarUrl: base64, // Store the Base64 string in avatarUrl
+      }));
+    }
+  };
+
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -196,12 +216,12 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           />
+          <h3 className="font-medium">Avatar</h3>
           <input
-            type="text"
-            name="avatarUrl"
-            placeholder="Avatar URL"
-            value={newMember.avatarUrl}
-            onChange={handleChange}
+            type="file"
+            name="avatar"
+            accept="image/*"
+            onChange={handleFileChange}
             className="w-full p-2 border rounded"
           />
           <h3 className="font-medium">Skills</h3>
@@ -229,7 +249,6 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
           >
             + Add Skill
           </button>
-          {/* Repeat similar structure for projects, events, and attendance */}
           <div className="flex justify-end space-x-4 mt-4">
             <button
               type="button"

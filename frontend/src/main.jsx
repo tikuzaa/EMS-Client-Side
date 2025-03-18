@@ -20,7 +20,8 @@ import { projectsData } from './Data/projectsData.js';
 import { eventsData } from './Data/eventsData.js';
 import Modal from "react-modal";
 import { UserRoleProvider } from './Components/Utils/UserRoleContext.jsx';
-import MemberProfile from '../../MemberProfile/MemberProfile.jsx';
+import MemberProfile from '../MemberProfile/MemberProfile.jsx';
+
 
 Modal.setAppElement("#root");
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FaLinkedin, FaTwitter, FaGithub, FaUserShield } from 'react-icons/fa'; // Icons for social media and admin
-import MemberProfile from '../../../../MemberProfile/MemberProfile';
+import MemberProfile from '../Utils/axiosConfig.js';
 import { NavLink } from 'react-router-dom';
 
 const handleProfileVeiw = () => {

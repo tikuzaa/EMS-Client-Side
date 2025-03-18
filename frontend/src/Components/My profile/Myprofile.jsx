@@ -18,7 +18,7 @@ const Myprofile = () => {
       try {
         const response = await API.get(`/api/members/${userId}`); // Use API instance
         setMember(response.data);
-        console.log("member data:", response.data);
+        console.log("member data:", member);
       } catch (err) {
         setError("Member not found");
       } finally {
@@ -37,6 +37,7 @@ const Myprofile = () => {
     return <div className="text-center text-red-500 text-lg">{error}</div>;
   }
 
+  console.log() // logging for testing purposes 
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4 sm:p-6 rounded-lg min-h-screen">
       <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-4xl">
@@ -49,7 +50,7 @@ const Myprofile = () => {
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-            <Profileinfo member={member} />
+            <Profileinfo memberId={member._id} />
 
             <div className="grid gap-6">
               <div className="w-full overflow-hidden">

@@ -26,16 +26,18 @@ function Profileinfo({ memberId }) { // Changed from "member" to "memberId" (pas
 
   if (loading) {
     return <div className="text-center text-gray-500">Loading...</div>;
+
   }
 
   if (error) {
     return <div className="text-center text-red-500 text-lg">{error}</div>;
   }
 
+
   return (
     <div className="bg-blue-100 rounded-lg p-4 flex flex-col items-center shadow-md">
-      <img src={member.avatar} alt={member.name} className="h-36 w-36 rounded-full" /> 
-      <h2 className="mt-4 font-semibold text-lg">{member.name}</h2>
+      <img src={member.avatarUrl} alt={member.username} className="h-36 w-36 rounded-full" /> 
+      <h2 className="mt-4 font-semibold text-lg">{member.username}</h2>
 
       <div className="flex flex-col mt-8 gap-3 items-center">
         <button className="bg-black text-white px-2 py-1 rounded hover:text-yellow-500">

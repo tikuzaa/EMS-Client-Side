@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../Utils/axiosConfig"; 
 
-const ProjectComponent = ({ projectsData, membersData }) => {
+const ProjectComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isNewProject, setIsNewProject] = useState(false);
@@ -10,6 +10,27 @@ const ProjectComponent = ({ projectsData, membersData }) => {
     deadline: "",
     team: [],
   });
+  
+  const [projectsData, setProjectsData] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await API.get(`/api/projects`); // ✅ Fetch projects assigned to this member
+        if (response.data.success) {
+          setProjectsData(response.data.data);
+          console.log("Member projects fetched successfully:", response.data.data);
+          
+        } else {
+          console.error("Error fetching member projects:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const handleEditTeam = (project) => {
     setSelectedProject(project);
@@ -50,7 +71,8 @@ const ProjectComponent = ({ projectsData, membersData }) => {
           deploymentLink: "",
           team: projectDetails.team,
         };
-        const response = await API.post("/api/projects", newProject); // ✅ Use API instance
+        const response = await API.post("/api/projects", newProject);
+        
         console.log("New Project Added:", response.data);
       } else {
         const updatedProject = {
@@ -66,6 +88,10 @@ const ProjectComponent = ({ projectsData, membersData }) => {
     setIsModalOpen(false);
   };
 
+  const completedProjects = projectsData.filter(project => project.progress === 100);
+  console.log("Completed Projects:", completedProjects);  
+  
+
   return (
     <div className="p-6 space-y-6 font-poppins min-h-screen">
       {/* Ongoing Projects Section */}
@@ -73,13 +99,27 @@ const ProjectComponent = ({ projectsData, membersData }) => {
         style={{ backgroundColor: "rgba(242, 159, 103, 0.5)" }}
         className="shadow-lg rounded-lg p-6"
       >
-        <h2 className="text-2xl font-bold mb-4">Ongoing Projects</h2>
         <button
           className="mt-6 bg-[#1f456e] text-white py-2 px-4 rounded transition duration-300 ease-in-out hover:bg-[#163b54] transform hover:scale-105"
           onClick={handleAddProject}
         >
           Add New Project
         </button>
+      </section>
+
+      {/* Completed Projects Section */}
+      <section
+        style={{ backgroundColor: "rgba(103, 242, 159, 0.5)" }}
+        className="shadow-lg rounded-lg p-6"
+      >
+        <h2 className="text-2xl font-bold mb-4">Completed Projects</h2>
+        <ul>
+          {completedProjects.map(project => (
+            <li key={project.id} className="mb-2">
+              <span className="font-semibold">{project.name}</span> - Completed on {project.deadline}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Modal for Adding/Editing Projects */}

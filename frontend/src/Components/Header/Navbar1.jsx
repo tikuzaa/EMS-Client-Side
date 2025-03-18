@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar1.css";
 import { Link } from "react-router-dom";
+import logo from "../../assets/Images/logo.png";
 
 const Navbar = ({
   role,
@@ -17,7 +18,7 @@ const Navbar = ({
     <nav className="navbar ">
       <div className="grid grid-cols-2 gap-20 lg:flex lg:justify-between lg:items-center w-full">
         <div className="navbar-logo">
-          <img src="./src/assets/Images/logo.png" alt="logo" className="logo" />
+          <img src={logo} alt="logo" className="logo" />
           <h1>
             Emp<span>Space</span>
           </h1>

@@ -19,9 +19,9 @@ const AdminDashboard = () => {
         ]);
 
         setMembersData(membersRes.data);
-        setProjectsData(projectsRes.data);
-        setEventsData(eventsRes.data);
-        console.log("Data fetched successfully",membersData,projectsData,eventsData);
+        setProjectsData(projectsRes.data.data);
+        setEventsData(eventsRes.data.data);
+        console.log("Data fetched successfully",membersRes.data, projectsRes.data.data, eventsRes.data.data);
         
         setLoading(false);
       } catch (err) {

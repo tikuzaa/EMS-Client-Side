@@ -20,6 +20,7 @@ const EventComponent = ({eventsData, membersData}) => {
     try {
       const response = await API.get('/api/events');
       setEvents(response.data.data);
+      console.log("Event data: ", response.data.data)
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -30,6 +31,7 @@ const EventComponent = ({eventsData, membersData}) => {
     try {
       const response = await API.get('/api/members');
       setMembers(response.data);
+      console.log("members data: ", response.data)
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -114,8 +116,8 @@ const EventComponent = ({eventsData, membersData}) => {
           {getPastEvents().map((event) => (
             <div key={event.id} className="bg-gray-50 p-4 rounded-lg shadow">
                 <h2 className="text-lg font-semibold">Event: {event.name}</h2>
-              <h3 className="text-lg font-semibold">Date: {event.date}</h3>
-              <p>Venue: {event.venue}</p>
+              <h3 className="text-lg font-semibold">Date: {event.date.slice(0,10)}</h3>
+              <p>Venue: {event.location}</p>
               <h4 className="mt-2 font-semibold">Organizing Team:</h4>
               <ul>
                 {event.organizingTeam.map((member) => (

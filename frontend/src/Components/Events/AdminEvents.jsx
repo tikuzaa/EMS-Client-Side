@@ -15,6 +15,11 @@ const EventComponent = ({eventsData, membersData}) => {
     fetchMembers();
   }, []);
 
+  // close funtion to close modal on screen clicking
+  const close = () => {
+    setIsModalOpen(false);
+  }
+
   // Fetch all events
   const fetchEvents = async () => {
     try {
@@ -133,8 +138,8 @@ const EventComponent = ({eventsData, membersData}) => {
 
       {/* Add Event Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div onClick={close} className="fixed inset-0 flex justify-center items-start overflow-y-auto bg-gray-900 bg-opacity-50 z-50 pt-16 pb-8">
+          <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-lg p-6  w-full  max-w-md">
             <h2 className="text-xl font-bold mb-4">Create New Event</h2>
             <div className="mb-4">
             <label className="block mb-2">Event:</label>

@@ -9,7 +9,7 @@ const EventCard = ({ event, isUpcoming, membersData }) => {
     <div className={`flex flex-col p-4 mb-4 rounded-lg ${cardStyle}`}>
       
       <div className="flex justify-between items-center">
-        <div className="text-lg font-semibold">{event.date}</div>
+        <div className="text-lg font-semibold">{event.date.slice(0,10)}</div>
       </div>
       <div className="text-xl font-bold">{event.name}</div>
       <div className="flex items-center mt-2 space-x-2">

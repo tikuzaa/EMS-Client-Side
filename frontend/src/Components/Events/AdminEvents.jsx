@@ -3,7 +3,7 @@ import API from "../Utils/axiosConfig";
 
 const EventComponent = ({eventsData, membersData}) => {
   const [events, setEvents] = useState(eventsData); // Using imported events data
-  const [member, setMember] = useState(membersData)
+  const [members, setMembers] = useState(membersData)
   const [eventDetails, setEventDetails] = useState({
     date: '',
     location: '',
@@ -36,7 +36,7 @@ const EventComponent = ({eventsData, membersData}) => {
   const fetchMembers = async () => {
     try {
       const response = await API.get('/api/members');
-      setMember(response.data);
+      setMembers(response.data);
       console.log("members data: ", response.data)
     } catch (error) {
       console.error('Error fetching members:', error);
@@ -47,22 +47,23 @@ const EventComponent = ({eventsData, membersData}) => {
   const handleAddEvent = () => {
     setIsModalOpen(true);
     setEventDetails({
-        name: '',
+      name: '',
       date: '',
+      time: '',
       location: '',
       organizingTeam: [],
     });
   };
 
-  const handleTeamMemberAssign = (member, assignment) => {
-    setEventDetails((prevDetails) => ({
-      ...prevDetails,
-      organizingTeam: [
-        ...prevDetails.organizingTeam.filter((m) => m.memberId !== member.id),
-        { memberId: member.universityRollNumber, assignment },
-      ],
-    }));
-  };
+  const handleTeamMemberAssign = (memberId, assignment) => {
+  setEventDetails((prevDetails) => ({
+    ...prevDetails,
+    organizingTeam: [
+      ...prevDetails.organizingTeam.filter((m) => m !== memberId),
+      { memberId, assignment },
+    ],
+  }));
+};
 
   // Save the event to the backend
   const handleSaveEvent = async () => {
@@ -82,8 +83,9 @@ const EventComponent = ({eventsData, membersData}) => {
   const getPastEvents = () => events.filter(event => event.date < today);
 
   const getMemberNameById = (id) => {
-    const member = membersData.find((m) => m.id === id);
-    return member ? member.name : 'Unknown Member';
+    const member = members.find((m) => m._id === id);
+    console.log("getmembernamesbyid: ", member);
+    return member ? member.username : 'Unknown Member';
   };
 
   return (
@@ -128,7 +130,8 @@ const EventComponent = ({eventsData, membersData}) => {
               <h4 className="mt-2 font-semibold">Organizing Team:</h4>
               <ul>
                 {event.organizingTeam.map((member) => (
-                  <li key={member.memberId}>
+                  <li key={member}>
+                    {console.log("id:", member.memberId)}
                     {getMemberNameById(member.memberId)} - {member.assignment}
                   </li>
                 ))}
@@ -163,6 +166,16 @@ const EventComponent = ({eventsData, membersData}) => {
                   setEventDetails({ ...eventDetails, date: e.target.value })
                 }
               />
+              <label className="block mt-4 mb-2">Time</label>
+              <input
+                type="text"
+                className="border p-2 w-full"
+                value={eventDetails.time}
+                onChange={(e) =>
+                setEventDetails({ ...eventDetails, time: e.target.value })
+                }
+                placeholder="Enter event time (e.g., 10:00 AM - 11:00 AM)"
+              />
               <label className="block mt-4 mb-2">location</label>
               <input
                 type="text"
@@ -175,13 +188,14 @@ const EventComponent = ({eventsData, membersData}) => {
               />
               <label className="block mt-4 mb-2">Organizing Team</label>
               <ul className="space-y-4">
-                {member.map((member) => (
-                  <li key={member.id}>
+                {members.map((member, index) => (
+                  <li key={member._id || index}>
+
                     <label>
                       <input type="text" value={member.username} disabled />
                       <select
                         className="border p-1 rounded"
-                        onChange={(e) => handleTeamMemberAssign(member, e.target.value)}
+                        onChange={(e) => handleTeamMemberAssign(member._id, e.target.value)}
                         defaultValue="None"
                       >
                         <option value="None">Select Assignment</option>

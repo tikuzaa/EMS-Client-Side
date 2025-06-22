@@ -22,7 +22,7 @@ useEffect(() => {
   }
 }, [setIsLoggedIn]);
 
-console.log(isLoggedIn);
+
 
     
   

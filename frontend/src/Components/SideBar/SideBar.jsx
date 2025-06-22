@@ -4,7 +4,6 @@ import { NavLink, Link } from 'react-router-dom';
 const Sidebar = ({ handleLoginToggle, handleLogOut, handleAddMember }) => {
 
   const userRole = localStorage.getItem('userRole');
-  console.log(userRole);
 
 
   return (

@@ -21,6 +21,7 @@ import { eventsData } from './Data/eventsData.js';
 import Modal from "react-modal";
 import { UserRoleProvider } from './Components/Utils/UserRoleContext.jsx';
 import MemberProfile from '../MemberProfile/MemberProfile.jsx';
+import ProtectedRoute from './Routes/ProtectedRoute.jsx';
 
 
 Modal.setAppElement("#root");
@@ -53,16 +54,17 @@ const Main = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<EmployeeMgmt />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin/home" element={<HomePage />} />
-        <Route path="/member/home" element={<HomePage members={membersData} />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/projects" element={<AdminProjects projectsData={projectsData} membersData={membersData} />} />
-        <Route path="/admin/events" element={<AdminEvents eventsData={eventsData} membersData={membersData} />} />
-        <Route path="/member/projects" element={<MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} />} />
-        <Route path="/member/events" element={<MemberEvents eventsData={eventsData} membersData={membersData} />} />
-        <Route path="/member/myprofile/:id" element={<Myprofile members={membersData} />} />
-        <Route path="/member/memberprofile/:id" element={<MemberProfile/>} />
-        <Route path="/admin/myprofile/:id" element={<Myprofile members={membersData} />} />
+        
+        <Route path="/admin/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path="/member/home" element={<ProtectedRoute><HomePage members={membersData} /></ProtectedRoute>} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects projectsData={projectsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/admin/events" element={<ProtectedRoute><AdminEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/member/projects" element={<ProtectedRoute><MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} /></ProtectedRoute>} />
+        <Route path="/member/events" element={<ProtectedRoute><MemberEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/member/myprofile/:id" element={<ProtectedRoute><Myprofile members={membersData} /></ProtectedRoute>} />
+        <Route path="/member/memberprofile/:id" element={<ProtectedRoute><MemberProfile/></ProtectedRoute>} />
+        <Route path="/admin/myprofile/:id" element={<ProtectedRoute><Myprofile members={membersData} /></ProtectedRoute>} />
         <Route path="*" element={<Error />} />
       </Route>
     )

@@ -1,13 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom";
+import {Navigate} from "react-router-dom" ;
+import React from 'react'
 
-const ProtectedRoute = ({ allowedRoles }) => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const userRole = userData?.role; // Ensure `role` exists in userData
+function ProtectedRoute({children}) {
+  const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("userRole");
 
-  if (!userRole) return <Navigate to="/member/login" replace />;
-  if (!allowedRoles.includes(userRole)) return <Navigate to={`/${userRole}/home`} replace />;
+  if(!token){
+    return <Navigate to="/login" />
+  }
+  return children;
+}
 
-  return <Outlet />;
-};
-
-export default ProtectedRoute;
+export default ProtectedRoute

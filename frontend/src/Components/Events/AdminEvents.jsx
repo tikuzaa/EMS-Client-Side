@@ -3,7 +3,7 @@ import API from "../Utils/axiosConfig";
 
 const EventComponent = ({eventsData, membersData}) => {
   const [events, setEvents] = useState(eventsData); // Using imported events data
-  const [member, setMember] = useState(membersData)
+  const [members, setMembers] = useState(membersData)
   const [eventDetails, setEventDetails] = useState({
     date: '',
     location: '',
@@ -36,7 +36,7 @@ const EventComponent = ({eventsData, membersData}) => {
   const fetchMembers = async () => {
     try {
       const response = await API.get('/api/members');
-      setMember(response.data);
+      setMembers(response.data);
       console.log("members data: ", response.data)
     } catch (error) {
       console.error('Error fetching members:', error);
@@ -59,7 +59,7 @@ const EventComponent = ({eventsData, membersData}) => {
   setEventDetails((prevDetails) => ({
     ...prevDetails,
     organizingTeam: [
-      ...prevDetails.organizingTeam.filter((m) => m.memberId !== memberId),
+      ...prevDetails.organizingTeam.filter((m) => m !== memberId),
       { memberId, assignment },
     ],
   }));
@@ -83,8 +83,9 @@ const EventComponent = ({eventsData, membersData}) => {
   const getPastEvents = () => events.filter(event => event.date < today);
 
   const getMemberNameById = (id) => {
-    const member = membersData.find((m) => m.id === id);
-    return member ? member.name : 'Unknown Member';
+    const member = members.find((m) => m._id === id);
+    console.log("getmembernamesbyid: ", member);
+    return member ? member.username : 'Unknown Member';
   };
 
   return (
@@ -129,7 +130,8 @@ const EventComponent = ({eventsData, membersData}) => {
               <h4 className="mt-2 font-semibold">Organizing Team:</h4>
               <ul>
                 {event.organizingTeam.map((member) => (
-                  <li key={member.memberId}>
+                  <li key={member}>
+                    {console.log("id:", member.memberId)}
                     {getMemberNameById(member.memberId)} - {member.assignment}
                   </li>
                 ))}
@@ -186,7 +188,7 @@ const EventComponent = ({eventsData, membersData}) => {
               />
               <label className="block mt-4 mb-2">Organizing Team</label>
               <ul className="space-y-4">
-                {member.map((member, index) => (
+                {members.map((member, index) => (
                   <li key={member._id || index}>
 
                     <label>

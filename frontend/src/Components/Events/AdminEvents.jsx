@@ -47,22 +47,23 @@ const EventComponent = ({eventsData, membersData}) => {
   const handleAddEvent = () => {
     setIsModalOpen(true);
     setEventDetails({
-        name: '',
+      name: '',
       date: '',
+      time: '',
       location: '',
       organizingTeam: [],
     });
   };
 
-  const handleTeamMemberAssign = (member, assignment) => {
-    setEventDetails((prevDetails) => ({
-      ...prevDetails,
-      organizingTeam: [
-        ...prevDetails.organizingTeam.filter((m) => m.memberId !== member.id),
-        { memberId: member.id, assignment },
-      ],
-    }));
-  };
+  const handleTeamMemberAssign = (memberId, assignment) => {
+  setEventDetails((prevDetails) => ({
+    ...prevDetails,
+    organizingTeam: [
+      ...prevDetails.organizingTeam.filter((m) => m.memberId !== memberId),
+      { memberId, assignment },
+    ],
+  }));
+};
 
   // Save the event to the backend
   const handleSaveEvent = async () => {
@@ -163,6 +164,16 @@ const EventComponent = ({eventsData, membersData}) => {
                   setEventDetails({ ...eventDetails, date: e.target.value })
                 }
               />
+              <label className="block mt-4 mb-2">Time</label>
+              <input
+                type="text"
+                className="border p-2 w-full"
+                value={eventDetails.time}
+                onChange={(e) =>
+                setEventDetails({ ...eventDetails, time: e.target.value })
+                }
+                placeholder="Enter event time (e.g., 10:00 AM - 11:00 AM)"
+              />
               <label className="block mt-4 mb-2">location</label>
               <input
                 type="text"
@@ -175,13 +186,14 @@ const EventComponent = ({eventsData, membersData}) => {
               />
               <label className="block mt-4 mb-2">Organizing Team</label>
               <ul className="space-y-4">
-                {member.map((member) => (
-                  <li key={member.id}>
+                {member.map((member, index) => (
+                  <li key={member._id || index}>
+
                     <label>
                       <input type="text" value={member.username} disabled />
                       <select
                         className="border p-1 rounded"
-                        onChange={(e) => handleTeamMemberAssign(member.universityRollNumber, e.target.value)}
+                        onChange={(e) => handleTeamMemberAssign(member._id, e.target.value)}
                         defaultValue="None"
                       >
                         <option value="None">Select Assignment</option>

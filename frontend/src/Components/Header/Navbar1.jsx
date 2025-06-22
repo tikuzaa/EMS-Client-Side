@@ -29,7 +29,7 @@ const Navbar = ({
               <Link to="/about"></Link>
 
               {isLoggedIn && (
-                console.log(isLoggedIn),
+                
                 <div className="responsive-sidebar">
                   <button
                     className="lg:hidden block p-2 text-white bg-gray-800 rounded-md m-4"
@@ -47,7 +47,7 @@ const Navbar = ({
                 >
                   LogOut
                 </button> */}
-                {console.log(isLoggedIn)}
+                
               </Link>}
             </div>
           ) : (

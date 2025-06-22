@@ -83,8 +83,9 @@ const EventComponent = ({eventsData, membersData}) => {
   const getPastEvents = () => events.filter(event => event.date < today);
 
   const getMemberNameById = (id) => {
+    // console.log("membersid: ", id);
     const member = members.find((m) => m._id === id);
-    console.log("getmembernamesbyid: ", member);
+    // console.log("getmembernamesbyid: ", member);
     return member ? member.username : 'Unknown Member';
   };
 
@@ -129,10 +130,11 @@ const EventComponent = ({eventsData, membersData}) => {
               <p>location: {event.location}</p>
               <h4 className="mt-2 font-semibold">Organizing Team:</h4>
               <ul>
+                {console.log("event: ", event)}
                 {event.organizingTeam.map((member) => (
                   <li key={member}>
-                    {console.log("id:", member.memberId)}
-                    {getMemberNameById(member.memberId)} - {member.assignment}
+                    {console.log("id:", member)}
+                    {getMemberNameById(member.memberId._id)} - {member.assignment}
                   </li>
                 ))}
               </ul>

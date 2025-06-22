@@ -59,7 +59,7 @@ const EventComponent = ({eventsData, membersData}) => {
       ...prevDetails,
       organizingTeam: [
         ...prevDetails.organizingTeam.filter((m) => m.memberId !== member.id),
-        { memberId: member.id, assignment },
+        { memberId: member.universityRollNumber, assignment },
       ],
     }));
   };
@@ -181,7 +181,7 @@ const EventComponent = ({eventsData, membersData}) => {
                       <input type="text" value={member.username} disabled />
                       <select
                         className="border p-1 rounded"
-                        onChange={(e) => handleTeamMemberAssign(member.universityRollNumber, e.target.value)}
+                        onChange={(e) => handleTeamMemberAssign(member, e.target.value)}
                         defaultValue="None"
                       >
                         <option value="None">Select Assignment</option>

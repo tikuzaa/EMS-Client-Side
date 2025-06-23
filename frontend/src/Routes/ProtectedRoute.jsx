@@ -6,6 +6,9 @@ function ProtectedRoute({children , role}) {
   const userRole = localStorage.getItem("userRole");
 
   if(!token || userRole !== role){
+    localStorage.removeItem("userData");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
     return <Navigate to="/login" />
   }
   return children;

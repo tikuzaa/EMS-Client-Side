@@ -55,16 +55,16 @@ const Main = () => {
         <Route index element={<EmployeeMgmt />} />
         <Route path="/login" element={<Login />} />
         
-        <Route path="/admin/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-        <Route path="/member/home" element={<ProtectedRoute><HomePage members={membersData} /></ProtectedRoute>} />
-        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects projectsData={projectsData} membersData={membersData} /></ProtectedRoute>} />
-        <Route path="/admin/events" element={<ProtectedRoute><AdminEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
-        <Route path="/member/projects" element={<ProtectedRoute><MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} /></ProtectedRoute>} />
-        <Route path="/member/events" element={<ProtectedRoute><MemberEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
-        <Route path="/member/myprofile/:id" element={<ProtectedRoute><Myprofile members={membersData} /></ProtectedRoute>} />
-        <Route path="/member/memberprofile/:id" element={<ProtectedRoute><MemberProfile/></ProtectedRoute>} />
-        <Route path="/admin/myprofile/:id" element={<ProtectedRoute><Myprofile members={membersData} /></ProtectedRoute>} />
+        <Route path="/admin/home" element={<ProtectedRoute role={"admin"}><HomePage /></ProtectedRoute>} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute role={"admin"}><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/projects" element={<ProtectedRoute role={"admin"}><AdminProjects projectsData={projectsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/admin/events" element={<ProtectedRoute role={"admin"}><AdminEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/admin/myprofile/:id" element={<ProtectedRoute role={"admin"}><Myprofile members={membersData} /></ProtectedRoute>} />
+        <Route path="/member/home" element={<ProtectedRoute role={"member"}><HomePage members={membersData} /></ProtectedRoute>} />
+        <Route path="/member/projects" element={<ProtectedRoute role={"member"}><MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} /></ProtectedRoute>} />
+        <Route path="/member/events" element={<ProtectedRoute role={"member"}><MemberEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
+        <Route path="/member/myprofile/:id" element={<ProtectedRoute role={"member"}><Myprofile members={membersData} /></ProtectedRoute>} />
+        <Route path="/member/memberprofile/:id" element={<ProtectedRoute role={"member"}><MemberProfile/></ProtectedRoute>} />
         <Route path="*" element={<Error />} />
       </Route>
     )

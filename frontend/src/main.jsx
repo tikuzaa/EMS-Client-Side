@@ -64,7 +64,7 @@ const Main = () => {
         <Route path="/member/projects" element={<ProtectedRoute role={"member"}><MemberProjects projectsData={projectsData} memberId={localStorage.getItem("userId")} /></ProtectedRoute>} />
         <Route path="/member/events" element={<ProtectedRoute role={"member"}><MemberEvents eventsData={eventsData} membersData={membersData} /></ProtectedRoute>} />
         <Route path="/member/myprofile/:id" element={<ProtectedRoute role={"member"}><Myprofile members={membersData} /></ProtectedRoute>} />
-        <Route path="/member/memberprofile/:id" element={<ProtectedRoute role={"member"}><MemberProfile/></ProtectedRoute>} />
+        <Route path="/member/memberprofile/:id" element={<MemberProfile/>} />
         <Route path="*" element={<Error />} />
       </Route>
     )

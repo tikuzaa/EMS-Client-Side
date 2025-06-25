@@ -69,14 +69,13 @@ const EventComponent = ({eventsData, membersData}) => {
 
   // Save the event to the backend
   const handleSaveEvent = async () => {
-    setOrgTeam((prev) => prev.filter((item) => item.memberId !== null && item.assignment !== null));
-    const updated = {...eventDetails}
-    updated.organizingTeam = orgTeam;
-    setEventDetails(updated);
-    console.log(eventDetails);
-    
+    const updated = {...eventDetails, organizingTeam: orgTeam};
+    console.log("updated details",updated);
+    setEventDetails(updated); 
+    console.log("orgTeam: ",orgTeam); 
+    console.log("event details",eventDetails);
     try {
-      const response = await API.post('/api/events', eventDetails);
+      const response = await API.post('/api/events', updated);
       setEvents([...events, response.data]); // Update local state
       setIsModalOpen(false);
     } catch (error) {

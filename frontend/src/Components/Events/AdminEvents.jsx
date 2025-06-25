@@ -19,6 +19,8 @@ const EventComponent = ({ eventsData, membersData }) => {
   useEffect(() => {
     fetchEvents();
     fetchMembers();
+
+    
   }, []);
 
   // close funtion to close modal on screen clicking
@@ -37,6 +39,7 @@ const EventComponent = ({ eventsData, membersData }) => {
   };
 
   // Fetch all members
+  
   const fetchMembers = async () => {
     try {
       const response = await API.get("/api/members");
@@ -88,12 +91,10 @@ const EventComponent = ({ eventsData, membersData }) => {
   const getUpcomingEvents = () => events.filter((event) => event.date >= today);
   const getPastEvents = () => events.filter((event) => event.date < today);
 
-  const getMemberNameById = (id) => {
-    // console.log("membersid: ", id);
-    const member = members.find((m) => m._id === id);
-    // console.log("getmembernamesbyid: ", member);
-    return member ? member.username : "Unknown Member";
-  };
+const getMemberNameById = (id) => {
+  const member = members.find((m) => m._id === id);
+  return member ? member.username : "Unknown Member";
+};
 
   // handleChange for member and role selection
   const handleChange = (index, field, value) => {
@@ -114,9 +115,9 @@ const EventComponent = ({ eventsData, membersData }) => {
   return (
     <div className="p-6 space-y-6 min-h-screen">
     
-      {/* Upcoming Events Section */}
+      {/*Upcoming Events Section */}
       <section className="bg-white shadow-lg rounded-lg p-6">
-        {/* <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
+         <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {getUpcomingEvents().map((event) => (
             <div key={event.id} className="bg-gray-50 p-4 rounded-lg shadow">
@@ -127,13 +128,13 @@ const EventComponent = ({ eventsData, membersData }) => {
               <ul>
                 {event.organizingTeam.map((member) => (
                   <li key={member.memberId}>
-                    {getMemberNameById(member.memberId)} - {member.assignment}
+                    {getMemberNameById(member.memberId._id)} - {member.assignment}
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-        </div> */}
+        </div>
         <button
           className="mt-6 bg-green-500 text-white py-2 px-4 rounded"
           onClick={handleAddEvent}

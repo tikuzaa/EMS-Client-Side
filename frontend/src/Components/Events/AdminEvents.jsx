@@ -4,12 +4,15 @@ import API from "../Utils/axiosConfig";
 const EventComponent = ({eventsData, membersData}) => {
   const [events, setEvents] = useState(eventsData); // Using imported events data
   const [members, setMembers] = useState(membersData)
+  const [orgTeam, setOrgTeam] = useState([{memberId: 0, assignment: ""}]);
   const [eventDetails, setEventDetails] = useState({
     date: '',
     location: '',
     organizingTeam: [],
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const roles = ["Event, manager", "Coordinatior", "Tech Support"]
 
   useEffect(() => {
     fetchEvents();
@@ -26,7 +29,6 @@ const EventComponent = ({eventsData, membersData}) => {
     try {
       const response = await API.get('/api/events');
       setEvents(response.data.data);
-      console.log("Event data: ", response.data.data)
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -37,7 +39,7 @@ const EventComponent = ({eventsData, membersData}) => {
     try {
       const response = await API.get('/api/members');
       setMembers(response.data);
-      console.log("members data: ", response.data)
+      
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -67,7 +69,12 @@ const EventComponent = ({eventsData, membersData}) => {
 
   // Save the event to the backend
   const handleSaveEvent = async () => {
-    console.log(eventDetails)
+    setOrgTeam((prev) => prev.filter((item) => item.memberId !== null && item.assignment !== null));
+    const updated = {...eventDetails}
+    updated.organizingTeam = orgTeam;
+    setEventDetails(updated);
+    console.log(eventDetails);
+    
     try {
       const response = await API.post('/api/events', eventDetails);
       setEvents([...events, response.data]); // Update local state
@@ -88,6 +95,22 @@ const EventComponent = ({eventsData, membersData}) => {
     // console.log("getmembernamesbyid: ", member);
     return member ? member.username : 'Unknown Member';
   };
+
+  // handleChange for member and role selection
+  const handleChange = (index, field, value) => {
+    let updated = [...orgTeam]
+    updated[index][field] = value;
+    setOrgTeam(updated);
+  }
+
+  //handleAddMember for adding select option for new member in modal
+  const handleAddMember = () => {
+    setOrgTeam([...orgTeam, {memberId: 0, assignment: ""}])
+  }
+
+  const handleDelelteSelect = (i) => {
+    setOrgTeam((prev) => prev.filter((_, index) => index !== i));
+  }
 
   return (
     <div className="p-6 space-y-6 min-h-screen">
@@ -130,10 +153,8 @@ const EventComponent = ({eventsData, membersData}) => {
               <p>location: {event.location}</p>
               <h4 className="mt-2 font-semibold">Organizing Team:</h4>
               <ul>
-                {console.log("event: ", event)}
                 {event.organizingTeam.map((member) => (
                   <li key={member}>
-                    {console.log("id:", member)}
                     {getMemberNameById(member.memberId._id)} - {member.assignment}
                   </li>
                 ))}
@@ -189,27 +210,46 @@ const EventComponent = ({eventsData, membersData}) => {
                 placeholder="Enter location"
               />
               <label className="block mt-4 mb-2">Organizing Team</label>
-              <ul className="space-y-4">
-                {members.map((member, index) => (
-                  <li key={member._id || index}>
-
-                    <label>
-                      <input type="text" value={member.username} disabled />
-                      <select
-                        className="border p-1 rounded"
-                        onChange={(e) => handleTeamMemberAssign(member._id, e.target.value)}
-                        defaultValue="None"
+              {
+                orgTeam.map((item, index) => {
+                  return (
+                    <div key={index} className='w-full h-auto flex gap-2'>
+                      {/* member selection */}
+                      <select  
+                        value={item.memberId}
+                        onChange={(e) => handleChange(index, "memberId", e.target.value)}
+                        className="border p-2 rounded w-full mb-2"
                       >
-                        <option value="None">Select Assignment</option>
-                        <option value="Event Manager">Event Manager</option>
-                        <option value="Coordinator">Coordinator</option>
-                        <option value="Tech Support">Tech Support</option>
+                        <option value="">Select member</option>
+                        {members.map((m, i) => (
+                          <option key={i} value={m._id}>{m.username}</option>
+                        ))}
                       </select>
-                      
-                    </label>
-                  </li>
-                ))}
-              </ul>
+
+                      {/* role selection */}
+                      <select  
+                        value={item.role}
+                        onChange={(e) => handleChange(index, "assignment", e.target.value)}
+                        className="border p-2 rounded w-full mb-2"
+                      >
+                        <option value="">Select role</option>
+                        {roles.map((role, i) => (
+                          <option key={i} value={role}>{role}</option>
+                        ))}
+                      </select>
+                      <button onClick={() => handleDelelteSelect(index)} className='text-red-700'>×</button>
+                    </div>
+                  );
+                  
+                })
+              }
+              <button onClick={handleAddMember}>
+               <div >
+                <h1>+ add member</h1>
+              </div> 
+              </button>
+              
+
             </div>
 
             {/* Save Button */}

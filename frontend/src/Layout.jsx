@@ -84,16 +84,17 @@ useEffect(() => {
     handleSidebarToggle={handleSidebarToggle}/>
 
     {isLoggedIn?
-      (<div className={`flex flex-col lg:flex-row`}>
-        <div className={`lg:h-screen lg:w-64 w-full bg-gray-200 
-        transition-transform duration-300 ease-in-out 
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} z-50`}
-        ><Sidebar role={role} handleLogOut={handleLogOut} handleAddMember={handleAddMember} className="lg:h-screen z-1" /></div>
+      (<div className="flex flex-col lg:flex-row min-h-screen pt-16">
+  {/* Sidebar: shown always on large screens, toggled on small */}
+  <div className={`w-64 bg-gray-200 ${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
+    <Sidebar role={role} handleLogOut={handleLogOut} handleAddMember={handleAddMember} />
+  </div>
 
-        <div className="flex-1 lg:ml-12 mt-16 lg:mt-0">
-          <Outlet context={{ handleLoginToggle }} />
-        </div>
-      </div>):
+  {/* Main Content */}
+  <main className="flex-1 bg-gray-100 p-4 overflow-y-auto">
+    <Outlet context={{ handleLoginToggle }} />
+  </main>
+</div>):
       (<Outlet context={{ handleLoginToggle }} />)
     }
 

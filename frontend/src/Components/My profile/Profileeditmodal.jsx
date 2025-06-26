@@ -19,6 +19,26 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
     avatarFile: null,
   });
 
+  const domainOption = ["Data Science", "Web Development", "AIML", "Design"]
+
+  const addDomain = () => {
+    setFormData((prev) => (
+      {
+        ...prev,
+        domain: [...prev.domain, ""]
+      }
+    ))
+  }
+
+  const handleDomainChange = (index, value) => {
+    var updated = [...formData.domain]
+    updated[index] = value;
+    setFormData((prev) => ({
+      ...prev,
+      domain: updated
+    }))
+  }
+
   const [tab, setTab] = useState("personal");
 
   const handleChange = (e) => {
@@ -140,18 +160,36 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
               <option value="Other">Other</option>
             </select>
 
-            <select
-              name="domain"
-              value={formData.domain[0] || ""}
-              onChange={(e) => setFormData({ ...formData, domain: [e.target.value] })}
-              className="w-full border px-3 py-2 rounded mb-3"
+            {
+              formData.domain.map((data, index) => {
+                return(
+                  <select
+                    key={index}
+                    name="domain"
+                    value={data ||formData.domain[0]}
+                    onChange={(e) => handleDomainChange(index, e.target.value)}
+                    className="w-full border px-3 py-2 rounded mb-3"
+                  >
+                    <option value="">Select Domain</option>
+                    {
+                      domainOption.map((item, index) => {
+                        return(
+                          <option key={index} value={item}>{item}</option>
+                        )
+                      })
+                    }
+                  </select>
+                      )
+                    })
+            }
+            <button
+            type="button"
+            onClick={() => addDomain()}
+            className="text-blue-500"
             >
-              <option value="">Select Domain</option>
-              <option value="web development">Web Development</option>
-              <option value="app development">App Development</option>
-              <option value="ml">ML</option>
-              <option value="design">Design</option>
-            </select>
+              <h1>+ add domain</h1>
+            </button>
+            
 
             <input
               name="universityRollNumber"

@@ -264,7 +264,7 @@ const getMemberNameById = (id) => {
                 );
               })}
               <button onClick={handleAddMember}>
-                <div>
+                <div className="text-blue-500">
                   <h1>+ add member</h1>
                 </div>
               </button>

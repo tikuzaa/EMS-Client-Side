@@ -8,7 +8,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
     email: "",
     password: "",
     role: "",
-    domain: "",
+    domain: [""],
     socials: {
       linkedin: "",
       twitter: "",
@@ -18,15 +18,24 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
     yearOfPassing: "",
     stream: "",
     universityRollNumber: "",
-    avatarUrl: "", // This will store the Base64 string
+    avatarUrl: "", 
     skills: [],
     projects: [],
     events: [],
     attendance: [],
   });
 
+  // domain option array for selection
+  const domainOption = ["Data Science", "Web Development", "AIML", "Design"]
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const handleDomainChange = (index, value) => {
+    let updated = [...newMember.domain]
+    updated[index] = value;
+    setNewMember((prev) => ({...prev, domain:updated}))
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +44,16 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
       [name]: value,
     }));
   };
+
+  const addDomain = () => {
+    setNewMember(
+      (prev) => (
+        {
+          ...prev, domain: [...prev.domain, ""]
+        }
+      )
+    )
+  }
 
   const handleNestedChange = (e) => {
     const { name, value } = e.target;
@@ -95,7 +114,6 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
     try {
       const response = await API.post("/api/members", newMember);
       console.log("Member added successfully:", response.data);
@@ -151,14 +169,44 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           />
-          <input
+          {/* <input
             type="text"
             name="domain"
             placeholder="Domain"
             value={newMember.domain}
             onChange={handleChange}
             className="w-full p-2 border rounded"
-          />
+          /> */}
+          {/* domain */}
+          {
+            newMember.domain.map((item, index) => {
+              return(
+                <div >
+                  <select
+                  className="w-full p-2 border rounded" 
+                  key={index}
+                  value={item}
+                  onChange={(e) => handleDomainChange(index, e.target.value)}
+                  > 
+                    <option value="">Domain</option>
+                    { 
+                      domainOption.map((value, index) =>{
+                        return(
+                          <option value={value}>{value}</option>
+                        )
+                      })
+                    }
+                  </select>
+                </div>
+              )
+            })
+          }
+          <button
+          type="button"
+          onClick={() => addDomain()}
+          >
+            <h1 className="text-blue-500">+ add domain</h1>
+          </button>
           <h3 className="font-medium">Social Links</h3>
           <input
             type="text"
@@ -259,6 +307,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
             </button>
             <button
               type="submit"
+              onClick={() => onsubmit()}
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
             >
               Submit

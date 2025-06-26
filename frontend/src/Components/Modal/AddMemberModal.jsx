@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import API from "../Utils/axiosConfig"; // Ensure this is the correct path to your axios configuration
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
   const [newMember, setNewMember] = useState({
@@ -119,6 +121,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
       console.log("Member added successfully:", response.data);
       setSuccess("Member added successfully!");
       setIsModalOpen(false); // Close the modal
+      toast.success("Member added successfully!")
     } catch (err) {
       console.error("Error adding member:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Failed to add member. Please try again.");
@@ -127,6 +130,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <ToastContainer position="top-right" />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}

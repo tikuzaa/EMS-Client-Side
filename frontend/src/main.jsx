@@ -40,6 +40,7 @@ const Main = () => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get("/api/members");
+        console.log("main.jsx: ", response.data)
         setMembersData(response.data);
       } catch (err) {
         console.error("Error fetching members:", err);

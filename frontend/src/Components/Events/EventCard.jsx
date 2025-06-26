@@ -27,17 +27,10 @@ const EventCard = ({ event, isUpcoming, membersData }) => {
         <ul className="list-disc ml-6">
         {event.organizingTeam && event.organizingTeam.map((member) => {
           let memberData = null;
-
-          for (const data of membersData) { 
-              if (data._id === member.memberId) {
-                  memberData = data;
-                  break; 
-              }
-          }
-          console.log("Matching Member Data:", memberData);
+          memberData = membersData.find((item) => item._id == member.memberId._id)
 
           return (
-              <li key={member.memberId}>
+              <li key={member.memberId._id}>
                   {member.assignment}: {memberData ? memberData.username : "Member not found"}
               </li>
           );

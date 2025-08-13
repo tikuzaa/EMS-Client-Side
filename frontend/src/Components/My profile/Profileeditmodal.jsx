@@ -19,6 +19,40 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
     avatarFile: null,
   });
 
+  const domainOption = ["Data Science", "Web Development", "AIML", "Design"];
+
+  const addDomain = () => {
+    setFormData((prev) => ({
+      ...prev,
+      domain: [...prev.domain, ""],
+    }));
+  };
+
+  const handleDomainChange = (index, value, del = false) => {
+    if(del==false){
+      var updated = [...formData.domain];
+    updated[index] = value;
+    setFormData((prev) => ({
+      ...prev,
+      domain: updated,
+    }));
+    }else if(del==true){
+      var newDomain = formData.domain.filter((_, i) => {
+        return i!==index;
+      })
+      console.log(newDomain);
+      setFormData((prev) => (
+        {
+          ...prev,
+          domain: newDomain
+        }
+      ))
+    }
+    
+  };
+
+  
+
   const [tab, setTab] = useState("personal");
 
   const handleChange = (e) => {
@@ -40,37 +74,37 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
   };
 
   const handleSubmit = async () => {
-  try {
-    const payload = {
-      username: formData.username,
-      email: formData.email,
-      role: formData.role,
-      domain: formData.domain,
-      socials: formData.socials,
-      yearOfJoining: formData.yearOfJoining,
-      yearOfPassing: formData.yearOfPassing,
-      stream: formData.stream,
-      universityRollNumber: formData.universityRollNumber,
-      skills: formData.skills,
-    };
+    try {
+      const payload = {
+        username: formData.username,
+        email: formData.email,
+        role: formData.role,
+        domain: formData.domain,
+        socials: formData.socials,
+        yearOfJoining: formData.yearOfJoining,
+        yearOfPassing: formData.yearOfPassing,
+        stream: formData.stream,
+        universityRollNumber: formData.universityRollNumber,
+        skills: formData.skills,
+      };
 
-    if (formData.avatarFile) {
-      // Only send if user selected a new file (Base64 string)
-      payload.avatarUrl = formData.avatarFile;
+      if (formData.avatarFile) {
+        // Only send if user selected a new file (Base64 string)
+        payload.avatarUrl = formData.avatarFile;
+      }
+
+      if (formData.password?.trim()) {
+        payload.password = formData.password;
+      }
+
+      const res = await API.put(`/api/members/${member._id}`, payload);
+      toast.success("Profile updated successfully");
+      onSave(res.data); // update parent
+      onClose();
+    } catch (err) {
+      toast.error("Update failed. Please try again.");
     }
-
-    if (formData.password?.trim()) {
-      payload.password = formData.password;
-    }
-
-    const res = await API.put(`/api/members/${member._id}`, payload);
-    toast.success("Profile updated successfully");
-    onSave(res.data); // update parent
-    onClose();
-  } catch (err) {
-    toast.error("Update failed. Please try again.");
-  }
-};
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
@@ -79,10 +113,12 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
 
         {/* Tabs */}
         <div className="flex gap-4 mb-4">
-          {['personal', 'academic', 'social'].map((t) => (
+          {["personal", "academic", "social"].map((t) => (
             <button
               key={t}
-              className={`px-4 py-1 rounded-full text-sm font-medium ${tab === t ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+              className={`px-4 py-1 rounded-full text-sm font-medium ${
+                tab === t ? "bg-blue-600 text-white" : "bg-gray-200"
+              }`}
               onClick={() => setTab(t)}
             >
               {t.charAt(0).toUpperCase() + t.slice(1)}
@@ -117,9 +153,18 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
             />
 
             <label className="block text-sm font-medium mb-1">Avatar</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="mb-3" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mb-3"
+            />
             {formData.avatarPreview && (
-              <img src={formData.avatarPreview} alt="Preview" className="h-20 w-20 rounded-full mb-3" />
+              <img
+                src={formData.avatarPreview}
+                alt="Preview"
+                className="h-20 w-20 rounded-full mb-3"
+              />
             )}
           </>
         )}
@@ -140,18 +185,42 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
               <option value="Other">Other</option>
             </select>
 
-            <select
-              name="domain"
-              value={formData.domain[0] || ""}
-              onChange={(e) => setFormData({ ...formData, domain: [e.target.value] })}
-              className="w-full border px-3 py-2 rounded mb-3"
+            {formData.domain.map((data, index) => {
+              return (
+                <div className="flex gap-2">
+                  <select
+                    key={index}
+                    name="domain"
+                    value={data || formData.domain[0]}
+                    onChange={(e) => handleDomainChange(index, e.target.value)}
+                    className="w-full border px-3 py-2 rounded mb-3"
+                  >
+                    <option value="">Select Domain</option>
+                    {domainOption.map((item, index) => {
+                      return (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <button
+                  type="button"
+                  onClick={()=> handleDomainChange(index, "", true )}
+                  >
+                    <h1 className="text-red-500 items-center">x</h1>
+                  </button>
+                  
+                </div>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => addDomain()}
+              className="text-blue-500"
             >
-              <option value="">Select Domain</option>
-              <option value="web development">Web Development</option>
-              <option value="app development">App Development</option>
-              <option value="ml">ML</option>
-              <option value="design">Design</option>
-            </select>
+              <h1>+ add domain</h1>
+            </button>
 
             <input
               name="universityRollNumber"
@@ -184,7 +253,7 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
         {/* SOCIAL TAB */}
         {tab === "social" && (
           <>
-            {['linkedin', 'twitter', 'github', 'instagram'].map((social) => (
+            {["linkedin", "twitter", "github", "instagram"].map((social) => (
               <input
                 key={social}
                 name={social}
@@ -203,10 +272,16 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
         )}
 
         <div className="flex justify-end gap-3 mt-4">
-          <button onClick={onClose} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+          <button
+            onClick={onClose}
+            className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+          >
             Cancel
           </button>
-          <button onClick={handleSubmit} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
             Save Changes
           </button>
         </div>

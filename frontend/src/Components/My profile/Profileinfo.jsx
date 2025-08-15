@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
-import ProfileEditModal from "./ProfileEditModal";
+import ProfileEditModal from "./Profileeditmodal";
 
 function Profileinfo({ memberId }) {
   const [member, setMember] = useState(null);
@@ -77,9 +77,14 @@ function Profileinfo({ memberId }) {
       <h2 className="mt-4 text-xl font-bold text-center">{member.username}</h2>
 
       <div className="flex flex-col mt-6 gap-2 items-center">
-        <span className="bg-black text-white px-3 py-1 rounded-full text-sm capitalize">
-          {member.domain}
+        {member.domain?.map((d, index) => (
+        <span
+          key={index}
+          className="bg-black text-white px-3 py-1 rounded-full text-sm capitalize"
+        >
+          {d}
         </span>
+        ))}
         <span className="bg-yellow-500 text-white font-medium px-3 py-1 rounded-full text-sm">
           {getAcademicYear()}
         </span>
@@ -94,28 +99,28 @@ function Profileinfo({ memberId }) {
       </button>
 
       <div className="mt-6 flex gap-3 text-gray-700 text-xl">
-        {member.socialMedia?.linkedin && (
-          <a href={member.socialMedia.linkedin} target="_blank" rel="noopener noreferrer">
+        {member.socials?.linkedin && (
+          <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin />
           </a>
         )}
-        {member.socialMedia?.twitter && (
-          <a href={member.socialMedia.twitter} target="_blank" rel="noopener noreferrer">
+        {member.socials?.twitter && (
+          <a href={member.socials.twitter} target="_blank" rel="noopener noreferrer">
             <FaSquareXTwitter />
           </a>
         )}
-        {member.socialMedia?.github && (
-          <a href={member.socialMedia.github} target="_blank" rel="noopener noreferrer">
+        {member.socials?.github && (
+          <a href={member.socials.github} target="_blank" rel="noopener noreferrer">
             <FaGithub />
           </a>
         )}
-        {member.socialMedia?.facebook && (
-          <a href={member.socialMedia.facebook} target="_blank" rel="noopener noreferrer">
+        {member.socials?.facebook && (
+          <a href={member.socials.facebook} target="_blank" rel="noopener noreferrer">
             <FaFacebookSquare />
           </a>
         )}
-        {member.socialMedia?.instagram && (
-          <a href={member.socialMedia.instagram} target="_blank" rel="noopener noreferrer">
+        {member.socials?.instagram && (
+          <a href={member.socials.instagram} target="_blank" rel="noopener noreferrer">
             <FaInstagram />
           </a>
         )}

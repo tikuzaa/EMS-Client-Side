@@ -69,9 +69,14 @@ function MemberProfileInfo({ memberId }) {
       <h2 className="mt-4 text-xl font-bold text-center">{member.username}</h2>
 
       <div className="flex flex-col mt-6 gap-2 items-center">
-        <span className="bg-black text-white px-3 py-1 rounded-full text-sm capitalize">
-          {member.domain}
+        {member.domain?.map((d, index) => (
+        <span
+          key={index}
+          className="bg-black text-white px-3 py-1 rounded-full text-sm capitalize"
+        >
+          {d}
         </span>
+        ))}
         <span className="bg-yellow-500 text-white font-medium px-3 py-1 rounded-full text-sm">
           {getAcademicYear()}
         </span>

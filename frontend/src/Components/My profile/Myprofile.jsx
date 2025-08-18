@@ -47,7 +47,7 @@ const Myprofile = () => {
     alert("Account deleted successfully.");
 
     localStorage.clear();     // Clear local data
-    navigate("/login");       // Redirect to login or landing page
+    navigate("/login");       // Redirect to login
   } catch (error) {
     console.error("Delete error:", error);
     alert("Failed to delete account. Please try again.");

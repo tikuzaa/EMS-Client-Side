@@ -50,40 +50,47 @@ function Layout({ role }) {
   const handleAddMember = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  return (
-    <>
-      {/* Navbar only on /login */}
-      {showNavbar && (
-        <Navbar1
-          role={role}
-          isLoggedIn={isLoggedIn}
-          handleLoginToggle={handleLoginToggle}
-          handleSidebarToggle={handleSidebarToggle}
-        />
-      )}
+// Layout.jsx
 
-      {isLoggedIn ? (
-        <div className={`flex flex-col lg:flex-row min-h-screen ${showNavbar ? "pt-16" : ""}`}>
-          {/* Sidebar stays visible after login */}
-          <div className={`w-64 bg-gray-200 ${sidebarOpen ? "block" : "hidden"} lg:block`}>
-            <Sidebar role={role} handleLogOut={handleLogOut} handleAddMember={handleAddMember} />
-          </div>
+return (
+  <>
+    {/* Navbar only on /login */}
+    {showNavbar && (
+      <Navbar1
+        role={role}
+        isLoggedIn={isLoggedIn}
+        handleLoginToggle={handleLoginToggle}
+        handleSidebarToggle={handleSidebarToggle}
+      />
+    )}
 
-          <main className="flex-1 bg-gray-100 p-4 overflow-y-auto">
-            <Outlet context={{ handleLoginToggle }} />
-          </main>
+    {isLoggedIn ? (
+      <div className={`flex flex-col lg:flex-row min-h-screen ${showNavbar ? "pt-16" : ""}`}>
+        {/* Sidebar stays visible after login */}
+        <div className={`w-64 bg-gray-200 ${sidebarOpen ? "block" : "hidden"} lg:block`}>
+          <Sidebar role={role} handleLogOut={handleLogOut} handleAddMember={handleAddMember} />
         </div>
-      ) : (
-        // Public pages (login) — no sidebar
-        <div className={`${showNavbar ? "pt-16" : ""}`}>
+
+        <main className="flex-1 bg-gray-100 p-4 overflow-y-auto">
           <Outlet context={{ handleLoginToggle }} />
-        </div>
-      )}
+        </main>
+      </div>
+    ) : (
+      // Public pages (login) — no sidebar
+      <div className={`${showNavbar ? "pt-16" : ""}`}>
+        <Outlet context={{ handleLoginToggle }} />
+      </div>
+    )}
 
-      {isLoggedIn ? <FooterMin /> : <Footer />}
-      {isModalOpen && <AddMemberModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
-    </>
-  );
+    {/* 👇 Show footer on all pages EXCEPT /login */}
+    {location.pathname !== "/login" && (
+      isLoggedIn ? <FooterMin /> : <Footer />
+    )}
+
+    {isModalOpen && <AddMemberModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+  </>
+);
+
 }
 
 export default Layout;

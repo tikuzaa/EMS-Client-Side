@@ -5,6 +5,9 @@ import Footer from "./Components/Footer/Footer";
 import FooterMin from "./Components/Footer/FooterMin";
 import Sidebar from "./Components/SideBar/SideBar";
 import AddMemberModal from "./Components/Modal/AddMemberModal";
+import { useNavigate } from "react-router-dom";
+
+
 
 function Layout({ role }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,11 +17,12 @@ function Layout({ role }) {
 
   // show navbar ONLY on the login page route
   const showNavbar = location.pathname === "/login";
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem("userData");
     setIsLoggedIn(!!userData);
-  }, []);
+  }, [location]);
 
   const handleLoginToggle = () => {
     if (isLoggedIn) {
@@ -33,7 +37,10 @@ function Layout({ role }) {
     localStorage.removeItem("memberData");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
+    navigate('/login')
     handleLoginToggle();
+    
+
   };
 
   const handleSidebarToggle = () => setSidebarOpen((v) => !v);

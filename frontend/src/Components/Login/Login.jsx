@@ -44,12 +44,14 @@ const Login = () => {
   const isMemberLogin = location.pathname === "/member/login"; // kept
 
   return (
+    <div className="overflow-y-hidden">
+
+
     <div
-      className="min-h-screen w-full relative overflow-hidden flex flex-col"
+      className=" w-full relative overflow-y-hidden h-screen bg-cover bg-center flex flex-col"
       style={{
         backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+
       }}
     >
       {/* MAIN CENTERED AREA */}
@@ -110,16 +112,11 @@ const Login = () => {
                 Log in
               </button>
             </form>
-
-            <div className="mt-4 text-center">
-              <Link to="/member/login" className="text-sm text-gray-700 underline">
-                Already have an account? Log in here
-              </Link>
-            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

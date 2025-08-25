@@ -15,7 +15,7 @@ const Navbar = ({
   
 
   return (
-    <nav className="navbar ">
+    <nav className="navbar absolute top-0 z-10">
       <div className="grid grid-cols-2 gap-20 lg:flex lg:justify-between lg:items-center w-full">
         <div className="navbar-logo">
           <img src={logo} alt="logo" className="logo" />

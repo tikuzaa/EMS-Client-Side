@@ -45,14 +45,18 @@ const Login = () => {
 
   return (
     <div className="overflow-y-hidden">
-
-
-    <div
-      className=" w-full relative overflow-y-hidden h-screen bg-cover bg-center flex flex-col"
-      style={{
+    
+    <div className="z-1 absolute inset-0 bg-cover bg-center"
+    style={{
         backgroundImage: `url(${bgImage})`,
 
       }}
+    >
+
+    </div>
+
+    <div
+      className=" w-full relative overflow-y-hidden  bg-cover bg-center flex flex-col"
     >
       {/* MAIN CENTERED AREA */}
       <div className="flex-1 flex items-center justify-center px-4 py-10 md:py-16">

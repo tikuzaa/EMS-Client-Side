@@ -1,0 +1,1 @@
+export default domains = ['Development', 'Design & Creativity', 'CDP', 'AIMl'];

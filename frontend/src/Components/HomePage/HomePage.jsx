@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MemberCard from "../MemberCard/Member Card.jsx";
 import API from "../Utils/axiosConfig"; // Axios global instance
+import domains from "../../domains/domains.js";
 
 const HomePage = () => {
   const location = useLocation();
@@ -51,27 +52,15 @@ const HomePage = () => {
 
 
   // Get unique domains for filtering
-  const domains = ["All", ...new Set(
-    members.map(member => 
-      Array.isArray(member.domain) && member.domain.length > 0
-        ? member.domain[0].trim().toLowerCase() // Extract first domain and normalize
-        : "unknown" // Fallback for missing domains
-    )
-  )];
+
 
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-      <div className="name px-4">
-        {storedUserData ? (
-          <h1>Welcome {storedUserData}</h1>
-        ) : (
-          <h1>Welcome Guest</h1>
-        )}
-      </div>
+      
       
       {/* Domain Tabs */}
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between">
         <ul className="flex space-x-4">
           {domains.map(domain => (
             <li key={domain}>
@@ -84,6 +73,13 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
+        <div className="name px-4">
+          {storedUserData ? (
+            <h1>Welcome {storedUserData}</h1>
+          ) : (
+            <h1>Welcome Guest</h1>
+          )}
+      </div>
       </div>
 
       {/* Search Bar */}

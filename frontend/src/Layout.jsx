@@ -5,6 +5,9 @@ import Footer from "./Components/Footer/Footer";
 import FooterMin from "./Components/Footer/FooterMin";
 import Sidebar from "./Components/SideBar/SideBar";
 import AddMemberModal from "./Components/Modal/AddMemberModal";
+import { useNavigate } from "react-router-dom";
+
+
 
 function Layout({ role }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,11 +17,18 @@ function Layout({ role }) {
 
   // show navbar ONLY on the login page route
   const showNavbar = location.pathname === "/login";
-
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    setIsLoggedIn(!!userData);
-  }, []);
+    if(token != null){
+      setIsLoggedIn(true);
+      setSidebarOpen(true)
+    }else{
+      setIsLoggedIn(false);
+      setSidebarOpen(false);
+    }
+    
+  }, [location]);
 
   const handleLoginToggle = () => {
     if (isLoggedIn) {
@@ -33,19 +43,16 @@ function Layout({ role }) {
     localStorage.removeItem("memberData");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
+    navigate('/login')
     handleLoginToggle();
+    
+
   };
 
   const handleSidebarToggle = () => setSidebarOpen((v) => !v);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setSidebarOpen(true);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleAddMember = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -67,7 +74,7 @@ return (
     {isLoggedIn ? (
       <div className={`flex flex-col lg:flex-row min-h-screen ${showNavbar ? "pt-16" : ""}`}>
         {/* Sidebar stays visible after login */}
-        <div className={`w-64 bg-gray-200 ${sidebarOpen ? "block" : "hidden"} lg:block`}>
+        <div className={`w-64 bg-gray-200 ${sidebarOpen ? "block" : "hidden"} `}>
           <Sidebar role={role} handleLogOut={handleLogOut} handleAddMember={handleAddMember} />
         </div>
 

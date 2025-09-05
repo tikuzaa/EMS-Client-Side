@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import API from "../Utils/axiosConfig";
-
+import domainOption from "../../domains/domains.js"
 const ProfileEditModal = ({ member, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     username: member?.username || "",
@@ -19,7 +19,7 @@ const ProfileEditModal = ({ member, onClose, onSave }) => {
     avatarFile: null,
   });
 
-  const domainOption = ["Data Science", "Web Development", "AIML", "Design"];
+  
 
   const addDomain = () => {
     setFormData((prev) => ({

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import MemberCard from "../MemberCard/Member Card.jsx";
 import API from "../Utils/axiosConfig"; // Axios global instance
+import domains from "../../domains/domains.js";
 
 const HomePage = () => {
   const location = useLocation();
@@ -51,13 +52,7 @@ const HomePage = () => {
 
 
   // Get unique domains for filtering
-  const domains = ["All", ...new Set(
-    members.map(member => 
-      Array.isArray(member.domain) && member.domain.length > 0
-        ? member.domain[0].trim().toLowerCase() // Extract first domain and normalize
-        : "unknown" // Fallback for missing domains
-    )
-  )];
+
 
 
   return (

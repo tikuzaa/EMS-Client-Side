@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import API from "../Utils/axiosConfig"; // Ensure this is the correct path to your axios configuration
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import domainOption from '../../domains/domains.js'
 const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
   const [newMember, setNewMember] = useState({
     username: "",
@@ -28,7 +28,7 @@ const AddMemberModal = ({ isModalOpen, setIsModalOpen }) => {
   });
 
   // domain option array for selection
-  const domainOption = ["Data Science", "Web Development", "AIML", "Design"]
+ 
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");

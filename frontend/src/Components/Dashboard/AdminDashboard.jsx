@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../Utils/axiosConfig"; // Import the Axios instance
+import domains from "../../domains/domains";
 
 const AdminDashboard = () => {
   const [membersData, setMembersData] = useState([]);
@@ -44,11 +45,27 @@ const AdminDashboard = () => {
   const totalMembers = membersData.length;
 
   // Group members by domain
-  const domainMembers = membersData.reduce((acc, member) => {
-    acc[member.domain] = acc[member.domain] ? acc[member.domain] + 1 : 1;
+  const domainMembers = domains.reduce((acc, domain) => {
+    acc[domain] = 0;
     return acc;
   }, {});
 
+  // Count members for each domain
+  membersData.forEach((member) => {
+    if (domainMembers.hasOwnProperty(member.domain)) {
+      domainMembers[member.domain]++;
+    }
+  });
+
+// In your return statement:
+{domains.map((domain) => (
+  <div key={domain} className="bg-white shadow-lg rounded-lg p-6">
+    <h2 className="text-xl font-bold">{domain}</h2>
+    <p className="text-2xl font-semibold text-gray-700">
+      {domainMembers[domain]} Members
+    </p>
+  </div>
+))}
   // Separate Active and Inactive members
   const activeMembers = membersData.filter(
     (member) => member.performance > 80 && member.attendance > 80
@@ -74,7 +91,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Domain Members Overview */}
-        {Object.keys(domainMembers).map((domain) => (
+        {domains.map((domain) => (
           <div key={domain} className="bg-white shadow-lg rounded-lg p-6">
             <h2 className="text-xl font-bold">{domain}</h2>
             <p className="text-2xl font-semibold text-gray-700">

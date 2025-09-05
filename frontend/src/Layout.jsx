@@ -18,10 +18,11 @@ function Layout({ role }) {
   // show navbar ONLY on the login page route
   const showNavbar = location.pathname === "/login";
   const navigate = useNavigate();
-  const userData = localStorage.getItem("userData");
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    if(userData != null){
+    if(token != null){
       setIsLoggedIn(true);
+      setSidebarOpen(true)
     }else{
       setIsLoggedIn(false);
       setSidebarOpen(false);
